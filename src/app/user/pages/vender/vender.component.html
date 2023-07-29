@@ -1,0 +1,158 @@
+<h3 class="titulo animate__animated animate__fadeInLeft">Vender Vaca</h3>
+<hr />
+
+<div class="container-venta animate__animated animate__fadeIn">
+  <div class="card-venta">
+    <div class="row">
+      <div class="col-md-12">
+        <!-- Buttons -->
+        <div class="row buttons mb-4">
+          <button
+            class="btn btn-select col-md-4"
+            [disabled]="ventaXkg"
+            (click)="toPrecioxkg()"
+          >
+            Venta x Kg
+          </button>
+          <button
+            class="btn btn-select col-md-4"
+            [disabled]="ventaFija"
+            (click)="toFijo()"
+          >
+            Venta Fija
+          </button>
+        </div>
+
+        <!-- Form venta x kg -->
+        <div *ngIf="ventaXkg" class="animate__animated animate__fadeIn">
+          <h3 class="text-center">Precio por Kg</h3>
+          <hr />
+          <h4>Vender {{ vaca.arete }}</h4>
+          <p>Peso de la vaca: {{ vaca.peso! | kg }} kg</p>
+          <p>Lote: {{vaca.loteId | nombreLote | async}}</p>
+          <p>Raza: {{vaca.raza}}</p>
+          <form [formGroup]="formVentaKg">
+            <div class="col-sm-4 mb-3">
+              <label class="mb-1">Precio kg</label>
+              <input
+                type="number"
+                class="form-control selector-mod"
+                formControlName="precioKg"
+                placeholder="60"
+              />
+              <!-- span de errores -->
+              <span
+                class="form-text text-danger"
+                *ngIf="campoNoValido('precioKg')"
+              >
+                Ingrese los kg
+              </span>
+            </div>
+          </form>
+          <!-- Boton Calcular -->
+          <button
+            class="btn btn-select mt-3"
+            (click)="calcular()"
+            [disabled]="formVentaKg.invalid"
+          >
+            Calcular
+          </button>
+
+          <div *ngIf="costoVaca > 0" class="mt-3 datos-venta animate__animated animate__fadeIn">
+            <div>
+              <h5>Costo de la vaca: $ {{ costoVaca }}</h5>
+              <h6>Precio por kg: $ {{precioxKg}}</h6>
+              <h6>Fecha de venta: {{fechaActual}} </h6>
+            </div>
+            <div class="align-venta animate__animated animate__fadeIn">
+              <button class="btn btn-vender mt-2" (click)="toConfirmar()" *ngIf="!confirmar">
+                Vender vaca
+              </button>
+              <div *ngIf="confirmar">
+                <div class="row animate__animated animate__fadeIn">
+                  <button class="btn btn-select mt-2 col-sm-4" (click)="venderVaca()">
+                    Si
+                  </button>
+                  <button class="btn btn-select mt-2 col-sm-4" (click)="cancelar()">
+                    Cancelar
+                  </button>
+                </div>
+                <span class="form-text text-danger">
+                  ¿Esta seguro de hacer la venta?
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Form precio fijo -->
+        <div *ngIf="ventaFija" class="animate__animated animate__fadeIn">
+          <h3 class="text-center">Precio Fijo</h3>
+          <hr />
+          <h4>Vender {{ vaca.arete }}</h4>
+          <p>Peso de la vaca: {{ vaca.peso! | kg }} kg</p>
+          <p>Lote: {{vaca.loteId | nombreLote | async}}</p>
+          <p>Raza: {{vaca.raza}}</p>
+          <form [formGroup]="formFijo">
+            <div class="col-sm-4 mb-3">
+              <label class="mb-1">Precio de la vaca</label>
+              <input
+                type="number"
+                class="form-control selector-mod"
+                formControlName="precio"
+                placeholder="30000"
+              />
+              <!-- span de errores -->
+              <span
+                class="form-text text-danger"
+                *ngIf="campoNoValido('precio')"
+              >
+                Ingrese los kg
+              </span>
+            </div>
+          </form>
+
+              <!-- Boton Calcular -->
+              <button
+              class="btn btn-select mt-3"
+              (click)="calcularFijo()"
+              [disabled]="formFijo.invalid"
+            >
+              Calcular
+            </button>
+
+            <div *ngIf="costoVacaFija > 0" class="mt-3 datos-venta animate__animated animate__fadeIn">
+              <div>
+                <h5>Costo de la vaca: $ {{ costoVacaFija }}</h5>
+                <h6>Precio por kg: $ {{precioxKgFija}}</h6>
+                <h6>Fecha de venta: {{fechaActual}} </h6>
+              </div>
+              <div class="align-venta animate__animated animate__fadeIn">
+                <button class="btn btn-vender mt-2" (click)="toConfirmar()" *ngIf="!confirmar">
+                  Vender vaca
+                </button>
+                <div *ngIf="confirmar">
+                  <div class="row animate__animated animate__fadeIn">
+                    <button class="btn btn-select mt-2 col-sm-4" (click)="venderVacaFijo()">
+                      Si
+                    </button>
+                    <button class="btn btn-select mt-2 col-sm-4" (click)="cancelar()">
+                      Cancelar
+                    </button>
+                  </div>
+                  <span class="form-text text-danger">
+                    ¿Esta seguro de hacer la venta?
+                  </span>
+                </div>
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-snackbar
+[showSnackbar]="showSnackbar"
+[mensaje]="mensaje"
+></app-snackbar>

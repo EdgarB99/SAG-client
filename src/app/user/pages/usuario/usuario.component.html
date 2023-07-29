@@ -1,0 +1,24 @@
+<div class="user justify-content-center align-items-center animate__animated animate__fadeIn" *ngIf="this.usuario">
+   <div class="row">
+    <div class="col-md-6 col-sm-12 user-img d-flex justify-content-center ">
+        <img src="assets/user.png" alt=""> 
+     </div>
+     <div class="col-md-6 col-sm-12 d-flex align-items-center ">
+        <div class="user-data">
+            <h3>Nombre: {{this.usuario.nombre}}</h3>
+            <h3>Apellidos: {{this.usuario.apellidos}}</h3>
+            <h3>Correo Electronico: {{this.usuario.email}}</h3>
+            <button class="btn btn-register" (click)="mostrarModal()">
+                Editar Datos
+            </button>
+        </div>
+     </div>
+   </div>
+</div>
+
+<app-modal-usuario *ngIf="modal"
+    [usuario]="usuario"
+    [modalA]="modal" 
+    (modal)="modal = $event"
+    (usuarioE)="usuario = $event"
+></app-modal-usuario>

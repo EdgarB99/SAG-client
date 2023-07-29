@@ -1,0 +1,73 @@
+<section>
+    <div class="contenedor-textos">
+        <h2>Modal</h2>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus non o</p>
+        <p class="cta" (click)="modalAction()">Modal</p>
+    </div>
+    <img src="assets/user.png" alt="">
+</section>
+
+<div [ngClass]="this.modalA ? 'modal-containerV' : 'modal-container' ">
+    <div [ngClass]="this.modalA ? 'mod' : 'modal-close' " >
+        <div class="modal-header">
+           <h4>{{titulo}}</h4>
+           <img src="{{img}}" alt="">
+           <p class="close" (click)="modalAction()" >X</p>
+        </div>
+   
+        <div class="modal-textos">
+            <form autocomplete="off" >
+                <div class="row justify-content-center align-items-center">
+
+                    <div class="mb-4 col-sm-8 col-md-8 text-center">
+                        <img src="assets/vaca.png" width="100px">
+                    </div>
+
+                    <div class="mb-4 col-sm-8 col-md-8">
+                        <label class="mb-1">Nombre(s)</label>
+                        <input type="text" class="form-control" formControlName="nombre"
+                            placeholder="Ingrese nombre(s)">
+                     
+                    </div>
+
+                    <div class="mb-4 col-sm-8 col-md-8">
+                        <label class="mt-1 mb-1">Apellido(s)</label>
+                        <input type="text" class="form-control" formControlName="apellidos"
+                            placeholder="Ingrese apellido(s)">
+                   
+                    </div>
+
+                    <div class="mb-4 col-sm-8 col-md-8">
+                        <label class="mt-1 mb-1">Correo Electronico</label>
+                        <input type="text" class="form-control" formControlName="email" placeholder="ejemplo@gmail.com">
+                    </div>
+
+                    <div class="mb-4 col-sm-8 col-md-8">
+                        <label class="mt-1 mb-1">Contraseña</label>
+                        <input type="password" class="form-control" formControlName="password"
+                            placeholder="Ingrese contraseña">
+                    
+                    </div>
+
+                    <div class="col-sm-8 col-md-8">
+                        <label class="mt-1 mb-1">Confirmar contraseña</label>
+                        <input type="password" class="form-control" formControlName="password2"
+                            placeholder="Confirme la contraseña">
+              
+                    </div>
+                </div>
+
+            </form>
+
+            <div class="row mt-3 text-center">
+                <div class="col">
+                    <button class="btn btn-register" >
+                        Actualizar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

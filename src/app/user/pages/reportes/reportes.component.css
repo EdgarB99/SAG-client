@@ -1,0 +1,39 @@
+.container-peso {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .buttons{
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    transition: transform 1s;
+    border-radius: 10px;
+    padding: 3% 5%;
+  }
+
+  .buttons button{
+    width: 100%;
+  }
+
+.selector-rep{
+    height: 35px;
+}
+
+.btn-select{
+  background-color: rgba(128, 128, 128, 0.502);
+  color: black ;
+}
+
+.container-graf {
+  justify-content: center;
+  margin-top: 25px;
+}
+
+#chart {
+  max-width: 900px;
+  padding: 10px;
+  margin: 35px auto;
+  opacity: 0.9;
+}

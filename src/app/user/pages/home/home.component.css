@@ -1,0 +1,535 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Verdana", sans-serif;
+  --color-hover: #D9D9D9;
+  --transition: all 0.2s ease;
+}
+
+
+
+/*COLORS*/
+
+/*light mode*/
+.root {
+  --color-white: #fff;
+  --color-black: #000;
+  --color-home: #D3D3D3;
+  --color-bg: #e2e2e2;
+  color: #000;
+}
+
+/*dark mode*/
+.dark-mode {
+  --color-white: #000;
+  --color-black: #fff;
+  --color-home: #585858;
+  --color-bg: #252526;
+  color: white;
+}
+
+
+/* Estilos del navbar */
+.navbar {
+  position: fixed;
+  top: 0;
+  z-index: 100;
+  width: 100%;
+  height: 80px;
+  background: #252526;
+  padding: 5px;
+  transition: var(--transition);
+
+}
+
+/* Contenido del navbar */
+.navbar-content {
+  height: 60px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  position: relative;
+  color: #fff;
+}
+
+/* Posicion del logo */
+.navbar-logo {
+  float: left;
+}
+
+
+/* Propiedades de la imagen */
+.navbar-logo img {
+  height: 50px;
+  min-width: 50px;
+  line-height: 50px;
+  cursor: pointer;
+}
+
+/* Menu del navbar */
+.navbar-menu {
+  height: 50px;
+  display: flex;
+  text-align: center;
+  position: relative;
+  margin-left: auto;
+}
+
+.navbar-menu p {
+  margin: 15px 20px;
+}
+
+.navbar-menu img {
+  height: 50px;
+  min-width: 50px;
+  line-height: 50px;
+  cursor: pointer;
+}
+/* navbar desaparece al tener menos 700px de ancho */
+@media(max-width: 700px) {
+  .navbar-menu {
+    display: none;
+  }
+}
+
+
+/*Estilos del sidebar*/
+/* Clase sidebar para sobreponer 
+el layout y ponerlo en la izquierda */
+.sidebar {
+  margin-top: 80px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  width: 78px;
+  height: calc(100vh - 80px);
+  background: var(--color-bg);
+  padding: 8px 16px;
+  transition: var(--transition);
+}
+
+/* Tamoño al expandirse el sidebar */
+.sidebar.expand {
+  width: 250px;
+  transition: var(--transition);
+}
+
+/* Clase paa darle tamaño y posicion 
+al header del sidebar */
+.nav-header {
+  height: 60px;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+/* Darle formato al logo */
+.nav-header .logo {
+  color: var(--color-black);
+  font-size: 23px;
+  font-weight: 600;
+  opacity: 0;
+  transition: var(--transition);
+}
+
+/* Sidebar expandido */
+.sidebar.expand .nav-header .logo {
+  opacity: 1;
+  transition: var(--transition);
+}
+
+/* boton pára abrir sidebar */
+.nav-header .btn-menu {
+  position: absolute;
+  color: #F89722;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  font-size: 23px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.sidebar.expand .nav-header .btn-menu {
+  margin-right: 0;
+}
+
+/* nav-links - links del sidebar  */
+.nav-links {
+  margin-top: 20px;
+  height: 100%;
+}
+
+.nav-links li {
+  position: relative;
+  margin: 10px 0;
+  list-style: none;
+}
+
+.nav-links img {
+  height: 50px;
+  min-width: 50px;
+  font-size: 23px;
+  text-align: center;
+  line-height: 50px;
+}
+
+
+.nav-links li a {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  border-radius: 12px;
+  align-items: center;
+  text-decoration: none;
+  background: var(--color-white);
+}
+
+.nav-links li:hover a {
+  background: var(--color-hover);
+}
+
+.nav-links li:hover i {
+  color: var(--color-white);
+}
+
+.nav-links li a .title {
+  color: var(--color-black);
+  font-size: 15px;
+  font-weight: 400;
+  white-space: nowrap;
+  display: none;
+  transition: var(--transition);
+}
+
+.sidebar.expand .nav-links li a .title {
+  display: block;
+  transition: var(--transition);
+}
+
+.nav-links li:hover a .title {
+  color: var(--color-white);
+}
+
+.nav-links li .tooltip {
+  position: absolute;
+  top: -20px;
+  left: calc(100% + 15px);
+  z-index: 3;
+  background: var(--color-white);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+  padding: 6px 14px;
+  font-size: 15px;
+  white-space: nowrap;
+  border-radius: 3px;
+  opacity: 0;
+  pointer-events: none;
+  transition: 0s;
+}
+
+.sidebar li:hover .tooltip {
+  opacity: 1;
+  pointer-events: auto;
+  transition: var(--transition);
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.sidebar.expand .tooltip {
+  display: none;
+}
+
+.nav-links .search-btn {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-25px);
+  font-size: 23px;
+  color: var(--color-black);
+  border-radius: 12px;
+  background: var(--color-white);
+  transition: var(--transition);
+}
+
+.sidebar.expand .nav-links .search-btn {
+  background: transparent;
+  transition: var(--transition);
+}
+
+.sidebar.expand .nav-links li:hover .search-btn {
+  color: var(--color-black);
+}
+
+.nav-links .search-btn:hover {
+  background: var(--color-hover);
+}
+
+.theme-wrapper {
+  position: fixed;
+  bottom: 0;
+  display: flex;
+  justify-content: space-between;
+  height: 60px;
+  width: 250px;
+  left: 0;
+  padding: 8px 16px;
+}
+
+.theme-wrapper .theme-icon {
+  font-size: 20px;
+  color: var(--color-black);
+  display: none;
+  transition: var(--transition);
+}
+
+.sidebar.expand .theme-wrapper .theme-icon {
+  display: block;
+}
+
+.theme-wrapper p {
+  font-size: 16px;
+  color: var(--color-black);
+  font-weight: 400;
+  display: none;
+  transition: var(--transition);
+}
+
+.sidebar.expand .theme-wrapper p {
+  display: block;
+}
+
+.theme-wrapper .theme-btn {
+  width: 40px;
+  height: 20px;
+  background: var(--color-bg);
+  border-radius: 30px;
+  position: relative;
+  cursor: pointer;
+}
+
+.theme-wrapper .theme-btn .theme-ball {
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  background: var(--color-black);
+  border-radius: 50%;
+  top: 2px;
+  left: 3px;
+}
+
+
+
+
+.home {
+  position: relative;
+  top: 80px;
+  left: 78px;
+  width: calc(100% - 78px);
+  min-height: 100vh;
+  background: var(--color-home);
+  z-index: 6;
+  transition: var(--transition);
+}
+
+.sidebar.expand~.home {
+  left: 250px;
+  width: calc(100% - 250px);
+  transition: var(--transition);
+}
+
+.home p {
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--color-black);
+  display: inline-block;
+  margin: 20px;
+  white-space: nowrap;
+}
+
+
+
+/*SIDEBAR-MENU*/
+
+.sidebar-menu {
+  display: none;
+  justify-content: center;
+  height: 60px;
+  width: 250px;
+  padding: 8px 16px;
+  opacity: 0;
+}
+
+.sidebar-menu p {
+  margin: 8px 10px;
+}
+
+.sidebar-menu img {
+  height: 50px;
+  min-width: 50px;
+  line-height: 50px;
+  cursor: pointer;
+}
+
+.sidebar.expand .sidebar-menu {
+  opacity: 1;
+  transition: var(--transition);
+}
+
+
+.sidebar.expand .sidebar-menu img {
+  display: block;
+}
+
+
+/*btn sidebar menu dentro del home*/
+
+.btn-sb i {
+  color: #F89722;
+  font-size: 23px;
+  cursor: pointer;
+  display: none;
+}
+
+.btn-sb-e i {
+  display: none;
+}
+
+/*Sidebar responsive*/
+
+
+
+@media(max-width: 700px) {
+
+  /*Al tamaño de 700 px aparece 
+    el menu de usuario 
+    y cerrar sesion en el sidebar*/
+  .sidebar-menu {
+    display: flex;
+  }
+
+  /*sidebar oculto*/
+  .sidebar {
+    margin-top: 80px;
+    position: fixed;
+    z-index: 0;
+    width: 0;
+    background: var(--color-bg);
+    padding: 8px 16px;
+    transition: var(--transition);
+  }
+
+  /*Sidebar mostrado*/
+  .sidebar.expand {
+    z-index: 100;
+  }
+
+
+  .nav-header {
+    display: none;
+  }
+
+  .sidebar.expand .nav-header {
+    display: flex;
+  }
+
+
+  .sidebar .nav-links {
+    opacity: 0;
+    display: none;
+  }
+
+  .sidebar.expand .nav-links {
+    opacity: 1;
+    display: inline;
+  }
+
+  .home {
+    position: relative;
+    top: 80px;
+    left: 0px;
+    width: 100%;
+    min-height: 100vh;
+    background: var(--color-home);
+    z-index: 6;
+    transition: var(--transition);
+  }
+
+  .btn-sb i {
+    display: inline;
+    color: #F89722;
+    font-size: 23px;
+    cursor: pointer;
+  }
+
+  .nav-links li a {
+    display: flex;
+    height: 100%;
+    width: auto;
+    border-radius: 12px;
+    align-items: center;
+    text-decoration: none;
+    background: var(--color-white);
+  }
+
+  .theme-wrapper {
+    position: fixed;
+    display: flex;
+    justify-content: space-between;
+    height: 60px;
+    width: 250px;
+    left: 0;
+    bottom: 5%;
+    padding: 8px 16px;
+  }
+
+}
+
+
+@media (max-height:750px) {
+  .nav-links li {
+    height: 35px;
+  }
+
+  .nav-links img {
+    height: 100%;
+  }
+
+}
+
+
+@media (max-height:600px) {
+  .nav-links li {
+    height: 30px;
+  }
+
+  .nav-links img {
+    height: 60%;
+  }
+
+  .theme-wrapper {
+    position: fixed;
+    display: flex;
+    justify-content: space-between;
+    height: 60px;
+    width: 250px;
+    left: 0;
+    padding: 8px 16px;
+  }
+
+
+
+}
+
+/*Estilos para logout*/
+
+.logout {
+  cursor: pointer;
+}
+
+.logout:hover {
+  color: #F89722;
+}

@@ -1,0 +1,40 @@
+<h5 class="text-center animate__animated animate__fadeIn">Listado de dietas</h5>
+
+<div class="container-table animate__animated animate__fadeIn">
+    <table>
+        <tr class="table-header">
+            <th>Nombre</th>
+            <th>Contenido</th>
+            <th></th>
+            <th></th>
+        </tr>
+
+        <tr *ngFor="let dieta of dietas" class="table-body">
+            <td>{{dieta.nombreDieta}}</td>
+            <td>{{dieta.contenidoDieta! | contenido}}</td>
+            <td></td>
+            <td><button class="btn btn-eliminar" (click)="deleteDieta(dieta.id!)">Eliminar</button></td>
+        </tr>
+    </table>
+</div>
+
+
+
+<div class="container-pagination animate__animated animate__fadeIn" *ngIf="dietas">
+    <button class="arrow-l" (click)="paginationLess()" [disabled]="pagination === 0">
+       <
+    </button>
+    <span class="arrow-n" >
+       {{pagination + 1}}
+    </span>
+    <button class="arrow-r" (click)="paginationPlus()" [disabled]="dietas.length < 5 || bloqueoPag ">
+       >
+    </button>
+   </div>
+
+   <app-snackbar
+[showSnackbar]="showSnackbar"
+[mensaje]="mensaje"
+></app-snackbar>
+
+   

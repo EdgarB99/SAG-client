@@ -1,0 +1,17 @@
+.user{
+    width: 100%;
+    padding: 8px 12px;
+    height: 100vh;
+}
+
+.user-data h3{
+    margin: 20px 5px;
+}
+
+.user-img img{
+    width: 250px;
+    min-width: 50px;
+    font-size: 23px;
+    text-align: center;
+    line-height: 50px;
+}

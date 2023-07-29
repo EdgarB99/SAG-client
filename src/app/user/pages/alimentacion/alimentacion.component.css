@@ -1,0 +1,88 @@
+.container-selectores{
+    margin: 1% 20%;
+}
+
+
+.container-alimentacion {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+.card-alimentacion{
+    width: 60%;
+    min-height: 300px;
+    background-color: var(--color-white);
+    display: flex;
+    flex-direction: column;
+    transition: transform 1s;
+    padding: 5%;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    
+}
+
+.datos-lote{
+    padding: 3px;
+}
+
+.datos-lote span {
+    margin: 2px 5px;
+}
+
+.peso-registrado{
+    color: #0B5100;
+}
+
+
+
+@media (max-width:600px) {
+    .card-alimentacion{
+        width: 80%;
+        background-color: var(--color-white);
+        display: flex;
+        flex-direction: column;
+        transition: transform 1s;
+        border-radius: 10px;
+        padding: 5%;
+    }
+    
+}
+
+@media (max-height:750px) {
+    .card-alimentacion{
+        width: 80%;
+        background-color: var(--color-white);
+        display: flex;
+        flex-direction: column;
+        transition: transform 1s;
+        border-radius: 10px;
+        padding: 5%;
+    }
+    
+}
+
+.d-none{
+    display: none;
+}
+
+.datos-alimentacion{
+    background-color: var(--color-home);
+    border-radius: 5px;
+    padding: 15px 25px;
+    display: flex;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+.datos-alimentacion span{
+    font-weight: bold;
+    
+}
+
+.registrar-alimentacion{
+    float: right;
+}

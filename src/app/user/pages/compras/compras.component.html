@@ -1,0 +1,66 @@
+<h3 class="titulo animate__animated animate__fadeInLeft">Compras</h3>
+<hr>
+<div class="container-selector animate__animated animate__fadeIn">
+    <div>
+        <!-- Boton Agregar -->
+        <button class="btn btn-register btn-agregar" (click)="agregarCompra()">Agregar Compra</button>
+    </div>
+</div>
+
+
+<div class="container-table animate__animated animate__fadeIn">
+    <table>
+        <tr class="table-header">
+            <th>Concepto</th>
+            <th>Fecha</th>
+            <th>Periodo</th>
+            <th>Tipo</th>
+            <th>Cantidad</th>
+            <th>Precio</th>
+            <th>Accion</th>
+            <th>Accion</th>
+        </tr>
+
+        <tr *ngFor="let compra of compras" class="table-body">
+            <td>{{compra.concepto}}</td>
+            <td>{{compra.fecha}}</td>
+            <td>{{compra.periodo}}</td>
+            <td>{{compra.tipo}}</td>
+            <td>{{compra.cantidad}}</td>
+            <td>{{compra.precio}}</td>
+            <td><button class="btn btn-editar" (click)="editarCompra(compra.id!)">Editar</button></td>
+            <td><button class="btn btn-eliminar" (click)="eliminarCompra(compra.id!)">Eliminar</button></td>
+        </tr>
+    </table>
+</div>
+
+
+
+<div class="container-pagination animate__animated animate__fadeIn" *ngIf="compras">
+    <button class="arrow-l" (click)="paginationLess()" [disabled]="pagination === 0">
+       <
+    </button>
+    <span class="arrow-n" >
+       {{pagination + 1}}
+    </span>
+    <button class="arrow-r" (click)="paginationPlus()" [disabled]="compras.length < 5  || bloqueoPag">
+       >
+    </button>
+   </div>
+
+<app-modal-compras
+*ngIf="modal"
+[usuarioId]="usuarioId"
+[titulo]="titulo"
+[actualizar]="actualizar"
+[compra]="compra"
+[modalA]="modal" 
+(modal)="modal = $event"
+></app-modal-compras>
+
+<app-snackbar
+[showSnackbar]="showSnackbar"
+[mensaje]="mensaje"
+></app-snackbar>
+
+

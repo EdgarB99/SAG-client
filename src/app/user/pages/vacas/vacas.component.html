@@ -1,0 +1,73 @@
+<h3 class="titulo animate__animated animate__fadeInLeft">Vacas</h3>
+<hr>
+<div class="container-selector animate__animated animate__fadeIn">
+        <div>
+            <form [formGroup]="formNombreLote">
+                <div class="col-sm-8 col-sm-6 col-xl-3 col-xxl-3">
+                    <label class="form-label">Lotes</label>
+                    <select class="form-control selector" formControlName="nombreLote">
+                        <option value=""> -- Seleccione lote -- </option>
+                        <option *ngFor="let lote of lotes" [value]="lote"> {{lote}} </option>
+                    </select>
+                </div>
+            </form>
+        </div>
+        
+        <div class="animate__animated animate__fadeIn">
+            <!-- Boton Agregar -->
+            <button class="btn btn-register btn-agregar" (click)="agregarVaca()">Agregar Vaca</button>
+        </div>    
+    </div>
+  
+
+<div class="container-table animate__animated animate__fadeIn" *ngIf="vacas" >
+    <table>
+        <tr class="table-header animate__animated animate__fadeIn">
+            <th>Arete</th>
+            <th>Fecha de Nacimiento</th>
+            <th>Fecha Ingreso</th>
+            <th>kg</th>
+            <th>lb</th>
+            <th>Raza</th>
+            <th>Lote</th>
+            <th></th>
+            <th></th>
+        </tr>
+
+        <tr *ngFor="let vaca of vacas" class="table-body animate__animated animate__fadeIn" >
+            <td>{{vaca.arete}}</td>
+            <td>{{vaca.fechaNacimiento}}</td>
+            <td>{{vaca.fechaIngreso}}</td>
+            <td>{{vaca.peso! | kg}}</td>
+            <td>{{vaca.peso! | lb}}</td>
+            <td>{{vaca.raza}}</td>
+            <td>{{vaca.loteId | nombreLote | async}}</td>
+            <td><button class="btn btn-editar"  (click)="editarVaca(vaca.id)" >Editar</button></td>
+            <td><button class="btn btn-vender" (click)="eliminarVaca(vaca.id!)" >Vender</button></td>
+        </tr>
+    </table>
+</div>
+
+
+<div class="container-pagination" *ngIf="vacas">
+ <button class="arrow-l" (click)="paginationLess()" [disabled]="pagination === 0">
+    <
+ </button>
+ <span class="arrow-n" >
+    {{pagination + 1}}
+ </span>
+ <button class="arrow-r" (click)="paginationPlus()" [disabled]="vacas.length < 5">
+    >
+ </button>
+</div>
+
+<app-modal-vaca *ngIf="modal"
+[usuarioId]="usuarioId"
+[titulo]="titulo"
+[lotes]="lotes"
+[razas]="razas"
+[vaca]="vaca"
+[actualizar]="actualizar"
+[modalA]="modal" 
+(modal)="modal = $event"
+></app-modal-vaca>

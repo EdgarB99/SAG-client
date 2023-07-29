@@ -1,0 +1,52 @@
+<div class="container-selector">
+
+    <div>
+        <!-- Boton Agregar -->
+        <button class="btn btn-register btn-agregar" (click)="agregarAlimento()">Agregar Alimento</button>
+    </div>
+</div>
+
+
+<div class="container-table">
+    <table>
+        <tr class="table-header">
+            <th>Nombre</th>
+            <th>Tipo</th>
+            <th>Precio</th>
+            <th></th>
+        </tr>
+
+        <tr *ngFor="let alimento of alimentos" class="table-body">
+            <td>{{alimento.nombreAlimento}}</td>
+            <td>{{alimento.tipo}}</td>
+            <td>{{alimento.precio}}</td>
+            <td><button class="btn btn-editar" (click)="editarAlimento(alimento.id!)">Editar</button></td>
+        </tr>
+    </table>
+</div>
+
+
+
+<div class="container-pagination" *ngIf="alimentos">
+    <button class="arrow-l" (click)="paginationLess()" [disabled]="pagination === 0">
+       <
+    </button>
+    <span class="arrow-n" >
+       {{pagination + 1}}
+    </span>
+    <button class="arrow-r" (click)="paginationPlus()" [disabled]="alimentos.length < 5  || bloqueoPag">
+       >
+    </button>
+   </div>
+
+<app-modal-alimento
+*ngIf="modal"
+[usuarioId]="usuarioId"
+[titulo]="titulo"
+[actualizar]="actualizar"
+[alimento]="alimento"
+[modalA]="modal" 
+(modal)="modal = $event"
+></app-modal-alimento>
+
+

@@ -1,0 +1,129 @@
+<h3 class="titulo animate__animated animate__fadeInLeft">Reportes</h3>
+<hr>
+
+<div class="container-buttons animate__animated animate__fadeIn">
+    <div class="buttons">
+        <div class="row">
+            <div class="col-sm-8 col-md-6 col-xl-5 col-xxl-3 mb-2">
+                <button (click)="changeReporte()" [ngClass]="reporteLote ? 'btn btn-select' : 'btn btn-register' "
+                    [disabled]="reporteLote">Reporte lote</button>
+            </div>
+            <div class="col-sm-8 col-md-6 col-xl-5 col-xxl-3 ">
+                <button (click)="changeReporte()" [ngClass]="reporteVaca ? 'btn btn-select' : 'btn btn-register' "
+                    [disabled]="reporteVaca">Reporte Vaca</button>
+            </div>
+        </div>
+
+        <div class="row mt-2">
+            <div class="col-sm-8 col-md-6 col-xl-5 col-xxl-3 mt-2 animate__animated animate__fadeIn">
+                <form [formGroup]="formNombreLote">
+                    <select class="form-control selector-rep" formControlName="nombreLote">
+                        <option value=""> -- Seleccione lote -- </option>
+                        <option *ngFor="let lote of lotes" [value]="lote"> {{lote}} </option>
+                    </select>
+                </form>
+            </div>
+
+            <div class="col-sm-8 col-md-6 col-xl-5 col-xxl-3 mt-2 animate__animated animate__fadeIn" *ngIf="aretes && reporteVaca">
+                <form [formGroup]="formVacaArete">
+                    <select class="form-control selector-rep" formControlName="arete">
+                        <option value=""> -- Seleccione arete -- </option>
+                        <option *ngFor="let arete of aretes" [value]="arete"> {{arete}} </option>
+                    </select>
+                </form>
+            </div>
+
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-sm-8 col-md-6 col-xl-5 col-xxl-3 mb-2">
+                <button (click)="changeTablaGrafica()" [ngClass]="tabla ? 'btn btn-select' : 'btn btn-register'"
+                    [disabled]="tabla">Tabla</button>
+            </div>
+            <div class="col-sm-8 col-md-6 col-xl-5 col-xxl-3">
+                <button (click)="changeTablaGrafica()" [ngClass]="grafica ? 'btn btn-select' : 'btn btn-register'"
+                    [disabled]="grafica">Grafica</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Reporte total del lote -->
+<!-- Contenedor de la tabla  -->
+<div class="container-table animate__animated animate__fadeIn" *ngIf="reporteLote && tabla">
+    <h4 *ngIf="!aretes">Seleccione un lote</h4>
+    <h3 *ngIf="sumaDiasPeso && sumaDiasPeso.length === 0" 
+        class="animate__animated animate__fadeIn">Las vacas de este lote no tienen pesos registrados</h3>
+    <table *ngIf="sumaDiasPeso && sumaDiasPeso.length !== 0" class="animate__animated animate__fadeIn">
+        <tr class="table-header">
+            <th>Día</th>
+            <th>Kg</th>
+            <th>Lb</th>
+            <!-- <th>N. vacas</th> -->
+        </tr>
+
+        <tr *ngFor="let peso of sumaDiasPeso" class="table-body">
+            <td>{{peso.dia}}</td>
+            <td>{{peso.kg}}</td>
+            <td>{{peso.lb}}</td>
+            <!-- <td *ngIf="aretes" >{{aretes.length}}</td> -->
+        </tr>
+    </table>
+</div>
+
+<!-- Container de la grafica del peso total del lote -->
+<div class="container-graf animate__animated animate__fadeIn" id="chart" *ngIf="reporteLote && grafica">
+    <h3 *ngIf="!aretes" class="text-center">Seleccione un lote</h3>
+    <h3 *ngIf="sumaDiasPeso && sumaDiasPeso.length === 0" class="text-center">Las vacas de este lote no tienen pesos
+        registrados</h3>
+    <div class="grafica animate__animated animate__fadeIn" *ngIf="series.length !==0">
+        <apx-chart style="width: 100%;" [series]="series" [chart]="chart" [title]="title" [responsive]="responsive"
+            [dataLabels]="dataLabels" [markers]="markers" [grid]="grid" [fill]="fill"></apx-chart>
+    </div>
+</div>
+
+
+
+<!-- Reporte total de cada vaca -->
+<!-- Contenedor de la tabla  -->
+
+<div class="container-table animate__animated animate__fadeIn" *ngIf="reporteVaca && tabla">
+    <h4 *ngIf="!aretes">Seleccione un lote</h4>
+    <h4 *ngIf="(sumaDiasPeso && sumaDiasPeso.length !== 0) && (aretes && seriesV.length === 0)">Seleccione una vaca
+    </h4>
+    <h4 *ngIf="diaPesoVaca && diaPesoVaca.length === 0" 
+        class="animate__animated animate__fadeIn">Esta vaca no tiene pesos registrados</h4>
+    <h4 *ngIf="aretes && aretes.length === 0" 
+        class="text-center animate__animated animate__fadeIn">Este lote aún no contiene vacas</h4>
+    <table *ngIf="diaPesoVaca && diaPesoVaca.length !== 0" class="animate__animated animate__fadeIn">
+        <tr class="table-header">
+            <th>Día</th>
+            <th>Kg</th>
+            <th>Lb</th>
+        </tr>
+
+        <tr *ngFor="let peso of diaPesoVaca" class="table-body">
+            <td>{{peso.dia}}</td>
+            <td>{{peso.kg}}</td>
+            <td>{{peso.lb}}</td>
+        </tr>
+    </table>
+</div>
+
+
+<!-- Container de la grafica del peso de la vaca -->
+<div class="container-graf animate__animated animate__fadeIn" id="chart" *ngIf="reporteVaca && grafica">
+    <h4 *ngIf="!aretes" class="text-center">Seleccione un lote</h4>
+    <h4 *ngIf="(sumaDiasPeso && sumaDiasPeso.length !== 0) && (aretes && seriesV.length === 0)" 
+        class="text-center animate__animated animate__fadeIn">
+        Seleccione una vaca </h4>
+    <h4 *ngIf="diaPesoVaca && diaPesoVaca.length === 0" 
+        class="text-center animate__animated animate__fadeIn">Esta vaca no tiene pesos registrados</h4>
+    <h4 *ngIf="aretes && aretes.length === 0" 
+        class="text-center animate__animated animate__fadeIn">Este lote aún no contiene vacas</h4>
+
+    <div class="grafica animate__animated animate__fadeIn" *ngIf="seriesV.length !==0">
+        <apx-chart [series]="seriesV" [chart]="chartV" [title]="titleV" [responsive]="responsiveV"
+            [dataLabels]="dataLabels" [markers]="markers" [grid]="grid" [fill]="fill"></apx-chart>
+    </div>
+</div>

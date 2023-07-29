@@ -1,0 +1,119 @@
+<div class="container-selectores">
+    <div>
+        <form [formGroup]="formNombreLote">
+            <div class="col-sm-8 col-sm-6 col-xl-3 col-xxl-3">
+                <label class="form-label">Lotes</label>
+                <select class="form-control selector" formControlName="nombreLote">
+                    <option value=""> -- Seleccione lote -- </option>
+                    <option *ngFor="let lote of lotes" [value]="lote"> {{lote}} </option>
+                </select>
+            </div>
+        </form>
+    </div>    
+</div>
+
+<div class="container-alimentacion mt-3">
+    <div class="card-alimentacion">
+        <h4 class="text-center mt-3" *ngIf="!lote">Seleccione un lote</h4>
+
+        <div class="row datos-lote" *ngIf="lote">
+            <div class="col-sm-6 row">
+                <h4>{{lote.nombreLote}}</h4>
+                <span class="col-sm-10">Cantidad de vacas: {{lote.vacas?.length}}</span>
+                <span class="col-sm-10">Peso: {{pesoTotal}} kg</span>
+            </div>
+
+            <div class="col-sm-6">
+                <h5>Calcule Alimentación</h5>
+                <form [formGroup]="formAlimentacion">
+                    <!-- Pesos -->
+                    <!-- Kilogramos -->
+                    <div class="col-sm-8 mb-3">
+                        <label class="mb-1">Factor %</label>
+                        <input type="number"
+                        [ngClass]=" actualizar ? (campoNoValido('factor') ? 'form-control form-invalido' : 'form-control form-valido') 
+                        :  ( campoTouched('factor') ? (campoNoValido('factor') ? 'form-control form-invalido' : 'form-control form-valido') : 'form-control')"
+                            formControlName="factor" placeholder="20%">
+                        <!-- span de errores -->
+                        <span class="form-text text-danger" *ngIf="campoNoValido('factor')">
+                            Ingrese los kg
+                        </span>
+                    </div>
+
+                    <!-- Alimento -->
+                        <div class="col-sm-8 mb-3">
+                            <label class="form-label">Alimento</label>
+                            <select class="form-control selector-mod" 
+                            [ngClass]=" actualizar ? (campoNoValido('nombreAlimento') ? 'form-control form-invalido' : 'form-control form-valido') 
+                            :  ( campoTouched('nombreAlimento') ? (campoNoValido('nombreAlimento') ? 'form-control form-invalido' : 'form-control form-valido') : 'form-control')"
+                                formControlName="nombreAlimento">
+                                <option value=""> -- Seleccione alimento -- </option>
+                                <option *ngFor="let alimento of alimentos" [value]="alimento"> {{alimento}} </option>
+                            </select>
+                        </div>
+                    
+                        <div class="col-sm-8 mb-3">
+                            <label class="mb-1">Fecha de inicio</label>
+                            <input type="date" 
+                            [ngClass]=" actualizar ? (campoNoValido('fechaInicio') ? 'form-control form-invalido' : 'form-control form-valido') 
+                        :  ( campoTouched('fechaInicio') ? (campoNoValido('fechaInicio') ? 'form-control form-invalido' : 'form-control form-valido') : 'form-control')"
+                            formControlName="fechaInicio">
+                            <!-- span de errores -->
+                            <span class="form-text text-danger" *ngIf="campoNoValido('fechaInicio')">
+                                Ingrese la fecha de inicio
+                            </span>
+                        </div>
+
+                        
+                        <div class="col-sm-8 mb-3">
+                            <label class="mb-1">Fecha final</label>
+                            <input type="date" 
+                            [ngClass]=" actualizar ? (campoNoValido('fechaFinal') ? 'form-control form-invalido' : 'form-control form-valido') 
+                        :  ( campoTouched('fechaFinal') ? (campoNoValido('fechaFinal') ? 'form-control form-invalido' : 'form-control form-valido') : 'form-control')"    
+                            formControlName="fechaFinal">
+                            <!-- span de errores -->
+                            <span class="form-text text-danger" *ngIf="campoNoValido('fechaFinal')">
+                                Ingrese la fecha final
+                            </span>
+                        </div>
+
+
+                </form>
+                <div class="row mt-3">
+                    <div class="col">
+                        <button class="btn btn-register" (click)="calcularAlimentacion()" 
+                           [disabled]="formAlimentacion.invalid" >
+                            Calcular
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row datos-lote mt-5 datos-alimentacion" *ngIf="calculado">
+    
+            <div class="col-sm-10 row">
+                <span class="col-sm-10">Alimento elegido: {{alimento.nombreAlimento}}</span>
+                <span class="col-sm-10">Cantidad de alimentación diaria: {{pesoAlimentacion | number: '1.0-2'}} kg</span>
+                <span class="col-sm-10">Costo de alimentacion diaria: $ {{costoAlimentacionD | number: '1.0-2'}}</span>
+                <span class="col-sm-10">Fecha de inicio: {{fechaInicio}}</span>
+                <span class="col-sm-10">Fecha de finalización: {{fechaFinal}}</span>
+                <span class="col-sm-10">Costo de alimentacion Total: $ {{costoAlimentacionT | number: '1.0-2' }}</span>
+            </div>
+            <div class="row mt-3">
+                <div class="registrar-alimentacion">
+                    <button class="btn btn-register" (click)="registrarAlimentacion()"
+                        >
+                        Registrar Alimentacion
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<app-snackbar
+[showSnackbar]="showSnackbar"
+[mensaje]="mensaje"
+></app-snackbar>

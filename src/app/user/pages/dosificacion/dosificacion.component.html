@@ -1,0 +1,202 @@
+<h5 class="text-center animate__animated animate__fadeIn">Dosificacion de dietas</h5>
+
+<div class="container-dosificacion mt-3 animate__animated animate__fadeIn">
+  <div class="card-dosificacion">
+    <div class="row">
+      <!-- Formulario -->
+      <div class="col-md-6">
+        <form [formGroup]="formDosis">
+          <!-- Nombre dieta -->
+          <div class="col-sm-8 mb-3">
+            <label class="form-label">Dietas</label>
+            <select
+              class="form-control selector-mod"
+              [ngClass]="
+                actualizar
+                  ? campoNoValido('dieta')
+                    ? 'form-control form-invalido'
+                    : 'form-control form-valido'
+                  : campoTouched('dieta')
+                  ? campoNoValido('dieta')
+                    ? 'form-control form-invalido'
+                    : 'form-control form-valido'
+                  : 'form-control'
+              "
+              formControlName="dieta"
+            >
+              <option value="">-- Seleccione dieta --</option>
+              <option *ngFor="let dieta of ndietas; index as i" [value]="dieta">
+                {{ dieta }}
+              </option>
+            </select>
+            <!-- span de errores -->
+            <span class="form-text text-danger" *ngIf="campoNoValido('dieta')">
+              Seleccione la dieta
+            </span>
+          </div>
+
+          <!-- Porcentaje peso vivo -->
+          <div class="col-sm-8 mb-3">
+            <label class="mb-1">Porcentaje peso vivo</label>
+            <input
+              class="selector-mod"
+              type="number"
+              [ngClass]="
+                actualizar
+                  ? campoNoValido('porcentajePeso')
+                    ? 'form-control form-invalido'
+                    : 'form-control form-valido'
+                  : campoTouched('porcentajePeso')
+                  ? campoNoValido('porcentajePeso')
+                    ? 'form-control form-invalido'
+                    : 'form-control form-valido'
+                  : 'form-control'
+              "
+              formControlName="porcentajePeso"
+              placeholder="15"
+            />
+            <!-- span de errores -->
+            <span
+              class="form-text text-danger"
+              *ngIf="campoNoValido('porcentajePeso')"
+            >
+              Ingrese el porcentaje
+            </span>
+          </div>
+
+          <!-- Lote -->
+          <div class="col-sm-8 col-md-8 mb-3">
+            <form [formGroup]="formNombreLote">
+              <label class="form-label">Lotes</label>
+              <select
+                class="form-control selector-mod"
+                [ngClass]="
+                  actualizar
+                    ? campoNoValido('nombreLote')
+                      ? 'form-control form-invalido'
+                      : 'form-control form-valido'
+                    : campoTouched('nombreLote')
+                    ? campoNoValido('nombreLote')
+                      ? 'form-control form-invalido'
+                      : 'form-control form-valido'
+                    : 'form-control'
+                "
+                formControlName="nombreLote"
+              >
+                <option value="">-- Seleccione lote --</option>
+                <option *ngFor="let lote of nlotes" [value]="lote">
+                  {{ lote }}
+                </option>
+              </select>
+
+              <!-- span de errores -->
+              <span
+                class="form-text text-danger"
+                *ngIf="campoNoValido('nombreLote')"
+              >
+                Seleccione el lote
+              </span>
+            </form>
+          </div>
+
+          <div class="col-sm-8 mb-3">
+            <label class="form-label text-center">Fecha Inicio</label>
+            <input
+              type="date"
+              class="form-control selector-mod"
+              [ngClass]="
+                actualizar
+                  ? campoNoValido('fechaInicio')
+                    ? 'form-control form-invalido'
+                    : 'form-control form-valido'
+                  : campoTouched('fechaInicio')
+                  ? campoNoValido('fechaInicio')
+                    ? 'form-control form-invalido'
+                    : 'form-control form-valido'
+                  : 'form-control'
+              "
+              formControlName="fechaInicio"
+              placeholder="50"
+            />
+            <!-- span de errores -->
+            <span
+              class="form-text text-danger"
+              *ngIf="campoNoValido('fechaInicio')"
+            >
+              Ingrese la fecha inicial
+            </span>
+          </div>
+
+          <div class="col-sm-8 mb-3">
+            <label class="form-label text-center">Fecha Final</label>
+            <input
+              type="date"
+              class="form-control selector-mod"
+              [ngClass]="
+                actualizar
+                  ? campoNoValido('fechaFinal')
+                    ? 'form-control form-invalido'
+                    : 'form-control form-valido'
+                  : campoTouched('fechaFinal')
+                  ? campoNoValido('fechaFinal')
+                    ? 'form-control form-invalido'
+                    : 'form-control form-valido'
+                  : 'form-control'
+              "
+              formControlName="fechaFinal"
+              placeholder="50"
+            />
+
+            <!-- span de errores -->
+            <span
+              class="form-text text-danger"
+              *ngIf="campoNoValido('fechaFinal')"
+            >
+              Ingrese la fecha final
+            </span>
+          </div>
+
+          <div class="col-sm-8 mb-3">
+            <button
+              class="btn btn-select"
+              [disabled]="formDosis.invalid"
+              (click)="calcular()"
+            >
+              Calcular
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Datos de la dieta -->
+      <div class="col-md-6">
+        <!-- Header -->
+        <p class="text-center">Dosificacion</p>
+        <hr />
+
+        <div class="datos-dosificacion animate__animated animate__fadeIn">
+          <p>Peso del lote: {{ pesoTotal }}</p>
+          <p *ngIf="dieta">Dieta: {{ dieta.nombreDieta }}</p>
+          <p *ngIf="dieta">
+            Contenido: {{ dieta.contenidoDieta! | contenido }}
+          </p>
+          <hr />
+          <p>Porcentaje peso vivo: {{ porcentaje | number }} %</p>
+          <p>Peso alimento: {{ pesoVivoKg | number }} kg</p>
+          <p *ngFor="let porcentaje of porcentajeContenidoKg">
+            {{ porcentaje.porcentaje | number }} kg *
+             ${{ porcentaje.precio | number }}
+          </p>
+          <h4>Costo total de la dosis : $ {{ costoTotal | number }}</h4>
+          <button class="btn btn-select mt-3" *ngIf="costoTotal>0" (click)="registerDosis()">Registrar Dosificacion</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<app-snackbar
+[showSnackbar]="showSnackbar"
+[mensaje]="mensaje"
+></app-snackbar>

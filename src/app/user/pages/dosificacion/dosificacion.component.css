@@ -1,0 +1,126 @@
+.container-selectores{
+    margin: 1% 20%;
+}
+
+
+.container-dosificacion {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+.container-formulario{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.card-dosificacion{
+    width: 70%;
+    min-height: 500px;
+    background-color: var(--color-white);
+    display: flex;
+    flex-direction: column;
+    transition: transform 1s;
+    padding: 5%;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+.datos-lote{
+    padding: 3px;
+}
+
+.datos-lote span {
+    margin: 2px 5px;
+}
+
+.peso-registrado{
+    color: #0B5100;
+}
+
+
+
+@media (max-width:600px) {
+    .card-dosificacion{
+        width: 80%;
+        background-color: var(--color-white);
+        display: flex;
+        flex-direction: column;
+        transition: transform 1s;
+        border-radius: 10px;
+        padding: 5%;
+    }
+    
+}
+
+@media (max-height:750px) {
+    .card-dosificacion{
+        width: 80%;
+        background-color: var(--color-white);
+        display: flex;
+        flex-direction: column;
+        transition: transform 1s;
+        border-radius: 10px;
+        padding: 5%;
+    }
+    
+}
+
+.d-none{
+    display: none;
+}
+
+.datos-dosificacion{
+    border-radius: 5px;
+    padding: 15px 25px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.064);
+}
+
+.datos-dosificacion span{
+    font-weight: bold;
+    
+}
+
+.registrar-dosificacion{
+    float: right;
+}
+
+.btn-add {
+    background-color: #252526 !important;
+    color: white;
+    border-color: #fdb61cc0;
+    cursor: pointer;
+    border: none;
+    font-weight:500;
+    min-width: 50px;
+    position: relative;
+    margin-top: 32px;
+  }
+
+  .btn-add:hover {
+    color:#F89722 ;
+  }
+  
+  .btn-eliminar {
+    background-color:  #c44a4a;
+    color: white;
+    border-color: #fdb61cc0;
+    cursor: pointer;
+    border: none;
+    font-weight:500;
+    font-size: 10px;
+    min-width: 20px;
+    min-height: 25px;
+    position: relative;
+    margin: 0px 5px;
+  }
+
+  .btn-eliminar:hover {
+    color:#ffffff ;
+  }

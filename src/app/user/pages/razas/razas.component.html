@@ -1,0 +1,48 @@
+<div class="container-selector">
+
+    <div>
+        <!-- Boton Agregar -->
+        <button class="btn btn-register btn-agregar" (click)="agregarRaza()">Agregar Raza</button>
+    </div>
+</div>
+
+
+<div class="container-table">
+    <table>
+        <tr class="table-header">
+            <th>Nombre</th>
+            <th>Descripcion</th>
+            <th></th>
+        </tr>
+
+        <tr *ngFor="let raza of razas" class="table-body">
+            <td>{{raza.nombreRaza}}</td>
+            <td>{{raza.descripcion}}</td>
+            <td><button class="btn btn-editar" (click)="editarRaza(raza.id!)">Editar</button></td>
+        </tr>
+    </table>
+</div>
+
+
+
+<div class="container-pagination" *ngIf="razas">
+    <button class="arrow-l" (click)="paginationLess()" [disabled]="pagination === 0">
+       <
+    </button>
+    <span class="arrow-n" >
+       {{pagination + 1}}
+    </span>
+    <button class="arrow-r" (click)="paginationPlus()" [disabled]="razas.length < 5 || bloqueoPag ">
+       >
+    </button>
+   </div>
+
+   <app-modal-raza
+   *ngIf="modal"
+   [usuarioId]="usuarioId"
+   [titulo]="titulo"
+   [actualizar]="actualizar"
+   [raza]="raza"
+   [modalA]="modal" 
+   (modal)="modal = $event"
+   ></app-modal-raza>

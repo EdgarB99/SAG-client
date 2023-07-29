@@ -1,0 +1,183 @@
+<!-- Container de toda la pantalla -->
+<div [ngClass]="this.modalA ? 'modal-containerV' : 'modal-container'">
+    <!-- Container del  modal-->
+    <div [ngClass]="this.modalA ? 'mod animate__animated animate__fadeInLeft' : 'modal-close'">
+        <!-- Header -->
+        <div class="modal-header">
+            <h4> {{ titulo }} </h4>
+            <p class="close" (click)="modalAction()"> X </p>
+        </div>
+        <!-- body del modal -->
+        <div class="modal-textos">
+            <!-- Form para actualizar usuario -->
+            <form autocomplete="off" [formGroup]="formVaca">
+                <!-- Container del form -->
+                <div class="row justify-content-center align-items-center">
+
+                    <!-- Arete -->
+                    <div class="mb-4 col-sm-8 col-md-8">
+                        <label class="mb-1">Arete</label>
+                        <input type="text" 
+                        [ngClass]=" actualizar 
+                        ? (campoNoValido('arete') ? 'form-control form-invalido' : 'form-control form-valido') 
+                        : ( campoTouched('arete') ? (campoNoValido('arete') ? 'form-control form-invalido' 
+                        : 'form-control form-valido') : 'form-control')"
+                        formControlName="arete" placeholder="MX000012344321">
+                        <!-- span de errores -->
+                        <span class="form-text text-danger" *ngIf="campoNoValido('arete')">
+                            {{areteErrorMsg}}
+                        </span>
+                    </div>
+
+                    <!-- Fecha de Nacimiento -->
+                    <div class="mb-4 col-sm-8 col-md-8">
+                        <label class="mt-1 mb-1">Fecha Nacimiento</label>
+                        <input type="date" 
+                        [ngClass]=" actualizar 
+                        ? (campoNoValido('fechaNacimiento') ? 'form-control form-invalido' : 'form-control form-valido') 
+                        : ( campoTouched('fechaNacimiento') ? (campoNoValido('fechaNacimiento') ? 'form-control form-invalido' 
+                        : 'form-control form-valido') : 'form-control')"
+                        formControlName="fechaNacimiento"
+                            placeholder="01-01-2022">
+                        <!-- span de errores -->
+                        <span class="form-text text-danger" *ngIf="campoNoValido('fechaNacimiento')">
+                            Ingrese la fecha de nacimiento
+                        </span>
+                    </div>
+
+
+                    <!-- Fecha Ingreso -->
+                    <div class="mb-4 col-sm-8 col-md-8">
+                        <label class="mt-1 mb-1">Fecha Ingreso</label>
+                        <input type="date" 
+                        [ngClass]=" actualizar 
+                        ? (campoNoValido('fechaIngreso') ? 'form-control form-invalido' : 'form-control form-valido') 
+                        : (campoTouched('fechaIngreso') ? (campoNoValido('fechaIngreso') ? 'form-control form-invalido' 
+                        : 'form-control form-valido') : 'form-control')"
+                        formControlName="fechaIngreso" placeholder="01-01-2022">
+                        <!-- span de errores -->
+                        <span class="form-text text-danger" *ngIf="campoNoValido('fechaIngreso')">
+                            Ingrese la fecha de ingreso
+                        </span>
+                    </div>
+
+
+
+                    <!-- Pesos -->
+                    <div class="row col-sm-8 col-md-8" *ngIf="!actualizar">
+                        <!-- Kilogramos -->
+                        <div class="col-sm-6">
+                            <label class="">Kg</label>
+                            <input type="number" 
+                            class="form-control" 
+                            [ngClass]="actualizar 
+                            ? (campoNoValido('kg') ? 'form-control form-invalido' : 'form-control form-valido') 
+                            : (campoTouched('kg') ? (campoNoValido('kg') ? 'form-control form-invalido' 
+                            : 'form-control form-valido') : 'form-control')"
+                            formControlName="kg" placeholder="200">
+                            <!-- span de errores -->
+                            <span class="form-text text-danger" *ngIf="campoNoValido('kg')">
+                                Ingrese los kg
+                            </span>
+                        </div>
+                        <!-- Libras -->
+                        <div class="col-sm-6">
+                            <label>Lb</label>
+                            <input type="number" 
+                            class="form-control" 
+                            [ngClass]=" actualizar 
+                            ? (campoNoValido('lb') ? 'form-control form-invalido' : 'form-control form-valido') 
+                            : ( campoTouched('lb') ? (campoNoValido('lb') ? 'form-control form-invalido' 
+                            : 'form-control form-valido') : 'form-control')"
+                            formControlName="lb" placeholder="200" readonly="true">
+                            <!-- span de errores -->
+                            <span class="form-text text-danger" *ngIf="campoNoValido('lb')">
+                                Ingrese las libras
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Raza -->
+                    <div class="col-sm-8 col-md-8">
+                            <label class="form-label">Razas</label>
+                            <select class="form-control selector-mod" 
+                            [ngClass]=" actualizar 
+                            ? (campoNoValido('raza') ? 'form-control form-invalido' : 'form-control form-valido') 
+                            : ( campoTouched('raza') ? (campoNoValido('raza') ? 'form-control form-invalido' 
+                            : 'form-control form-valido') : 'form-control')"
+                            formControlName="raza">
+                                <option value=""> -- Seleccione raza -- </option>
+                                <option *ngFor="let raza of razas" [value]="raza"> {{raza}} </option>
+                            </select>
+
+                            <!-- span de errores -->
+                            <span class="form-text text-danger" *ngIf="campoNoValido('nombreRaza')">
+                                Seleccione la raza
+                            </span>
+                    </div>
+
+                    <!-- Lote -->
+                    <div class="col-sm-8 col-md-8">
+                        <form [formGroup]="formNombreLote">
+                            <label class="form-label">Lotes</label>
+                            <select class="form-control selector-mod" 
+                            [ngClass]="actualizar 
+                            ? (campoNoValido('nombreLote') ? 'form-control form-invalido' : 'form-control form-valido') 
+                            :  ( campoTouched('nombreLote') ? (campoNoValido('nombreLote') ? 'form-control form-invalido' 
+                            : 'form-control form-valido') : 'form-control')"
+                                formControlName="nombreLote">
+                                <option value=""> -- Seleccione lote -- </option>
+                                <option *ngFor="let lote of lotes" [value]="lote"> {{lote}} </option>
+                            </select>
+
+                            <!-- span de errores -->
+                            <span class="form-text text-danger" *ngIf="campoNoValido('nombreLote')">
+                                Seleccione el lote
+                            </span>
+                        </form>
+                    </div>
+
+                </div>
+
+            </form>
+
+
+            <div class="row mt-3 text-center" *ngIf="!actualizar">
+                <div class="col">
+                    <button class="btn btn-register" (click)="registerVaca()" [disabled]="formVaca.invalid">
+                        Registrar
+                    </button>
+                </div>
+            </div>
+
+            <div class="row mt-3 text-center" *ngIf="actualizar">
+                <div class="col">
+                    <button class="btn btn-register" (click)="updateVaca()">
+                        Actualizar
+                    </button>
+                </div>
+            </div>
+
+            <div class="row mt-3 text-center" *ngIf="actualizar && comprobar">
+                <div class="col">
+                    <button class="btn btn-register">
+                        Si
+                    </button>
+                    <button class="btn btn-register">
+                        Cancelar
+                    </button>
+                </div>
+
+                <span class="form-text text-danger">
+                    ¿Desea Actualizar sus datos?
+                </span>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<app-snackbar
+[showSnackbar]="showSnackbar"
+[mensaje]="mensaje"
+></app-snackbar>

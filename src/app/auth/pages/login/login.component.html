@@ -1,0 +1,68 @@
+<div
+  class="d-flex justify-content-center align-items-center d-flex"
+  style="height: 100vh"
+>
+  <div class="card col-xs-10 col-sm-8 col-md-8 col-lg-6 col-xl-6 col-xxl-4 p-1 animate__animated animate__fadeInLeft">
+    <div class="card-header text-center ">
+      <h5>Ingresa</h5>
+    </div>
+
+    <div class="card-body mb-2">
+      <form autocomplete="off" [formGroup]="formLogin">
+        <div class="row justify-content-center align-items-center">
+          <div class="mb-4 col-sm-8 col-md-8 text-center">
+            <img src="assets/vaca.png" width="150px" />
+          </div>
+
+          <div class="mb-4 col-sm-8 col-md-8">
+            <label class="mt-1 mb-1">Correo Electronico</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="email"
+              placeholder="ejemplo@gmail.com"
+            />
+            <span class="form-text text-danger" *ngIf="campoNoValido('email')">
+              {{ emailErrorMsg }}
+            </span>
+            <span class="form-text text-danger" *ngIf="usuarioNotFound">
+              {{ usuarioNotFound }}
+            </span>
+          </div>
+
+          <div class="mb-4 col-sm-8 col-md-8">
+            <label class="mt-1 mb-1">Contraseña</label>
+            <input
+              type="password"
+              class="form-control"
+              formControlName="password"
+              placeholder="Ingrese contraseña"
+            />
+            <span
+              class="form-text text-danger"
+              *ngIf="campoNoValido('password')"
+            >
+              {{ passwordErrorMsg }}
+            </span>
+            <span class="form-text text-danger" *ngIf="passwordInvalid">
+              {{ passwordInvalid }}
+            </span>
+          </div>
+        </div>
+      </form>
+
+      <div class="row mt-3 text-center">
+        <div class="col">
+          <button class="btn btn-register" (click)="login()">Ingresar</button>
+        </div>
+      </div>
+
+      <div class="row mt-3 text-center">
+        <div class="col">
+          <span> ¿No tiene una cuenta? </span>
+          <a (click)="toRegister()"> Registrar </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

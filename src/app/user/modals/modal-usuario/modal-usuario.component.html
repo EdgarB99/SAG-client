@@ -1,0 +1,150 @@
+<!-- Container de toda la pantalla -->
+<div [ngClass]="this.modalA ? 'modal-containerV' : 'modal-container'">
+    <!-- Container del  modal-->
+    <div [ngClass]="this.modalA ? 'mod animate__animated animate__fadeInLeft' : 'modal-close'">
+        <!-- Header -->
+        <div class="modal-header">
+            <h4 *ngIf="this.usuario"> {{ titulo }} </h4>
+            <p class="close" (click)="modalAction()"> X </p>
+        </div>
+        <!-- body del modal -->
+        <div class="modal-textos">
+            <!-- Form para actualizar usuario -->
+            <form autocomplete="off" [formGroup]="formUsuario" *ngIf="usuarioComprobado">
+                <!-- Container del form -->
+                <div class="row justify-content-center align-items-center">
+                    <div class="mb-4 col-sm-8 col-md-8 text-center">
+                        <img src="assets/vaca.png" width="100px">
+                    </div>
+
+                    <!-- Nombre -->
+                    <div class="mb-4 col-sm-8 col-md-8">
+                        <label class="mb-1">Nombre(s)</label>
+                        <input type="text" 
+                        [ngClass]=" actualizar ? (campoNoValido('nombre') ? 'form-control form-invalido' : 'form-control form-valido') 
+                        :  ( campoTouched('nombre') ? (campoNoValido('nombre') ? 'form-control form-invalido' : 'form-control form-valido') : 'form-control')" 
+                            formControlName="nombre"
+                            placeholder="Ingrese nombre(s)">
+                            <!-- span de errores -->
+                        <span class="form-text text-danger" *ngIf="campoNoValido('nombre')">
+                            Ingrese el nombre
+                        </span>
+                    </div>
+
+                    <!-- Apellidos -->
+                    <div class="mb-4 col-sm-8 col-md-8">
+                        <label class="mt-1 mb-1">Apellido(s)</label>
+                        <input type="text" 
+                        [ngClass]=" actualizar ? (campoNoValido('apellidos') ? 'form-control form-invalido' : 'form-control form-valido') 
+                        :  ( campoTouched('apellidos') ? (campoNoValido('apellidos') ? 'form-control form-invalido' : 'form-control form-valido') : 'form-control')" 
+                            formControlName="apellidos"
+                            placeholder="Ingrese apellido(s)">
+                            <!-- span de errores -->
+                        <span class="form-text text-danger" *ngIf="campoNoValido('apellidos')">
+                            Ingrese los apellidos
+                        </span>
+                    </div>
+
+                    <!-- Email -->
+                    <div class="mb-4 col-sm-8 col-md-8">
+                        <label class="mt-1 mb-1">Correo Electronico</label>
+                        <input type="text" 
+                        [ngClass]=" actualizar ? (campoNoValido('email') ? 'form-control form-invalido' : 'form-control form-valido') 
+                                    :  ( campoTouched('email') ? (campoNoValido('email') ? 'form-control form-invalido' : 'form-control form-valido') : 'form-control')" 
+                        formControlName="email" placeholder="ejemplo@gmail.com">
+                        <!-- span de errores -->
+                        <span class="form-text text-danger" *ngIf="campoNoValido('email')">
+                            {{emailErrorMsg}}
+                        </span>
+                    </div>
+
+                    <!-- Password -->
+                    <div class="mb-4 col-sm-8 col-md-8">
+                        <label class="mt-1 mb-1">Contraseña</label>
+                        <input type="password" 
+                        [ngClass]=" actualizar ? (campoNoValido('password') ? 'form-control form-invalido' : 'form-control form-valido') 
+                        :  ( campoTouched('password') ? (campoNoValido('password') ? 'form-control form-invalido' : 'form-control form-valido') : 'form-control')" 
+                            formControlName="password"
+                            placeholder="Ingrese contraseña">
+                        <!-- span de errores -->
+                            <span   class="form-text text-danger" *ngIf="campoNoValido('password')">
+                            Ingrese la contraseña
+                        </span>
+                    </div>
+
+                    <!-- Password 2 -->
+                    <div class="col-sm-8 col-md-8">
+                        <label class="mt-1 mb-1">Confirmar contraseña</label>
+                        <input type="password"
+                        [ngClass]=" actualizar ? (campoNoValido('password2') ? 'form-control form-invalido' : 'form-control form-valido') 
+                        :  ( campoTouched('password2') ? (campoNoValido('password2') ? 'form-control form-invalido' : 'form-control form-valido') : 'form-control')" 
+                            formControlName="password2"
+                            placeholder="Confirme la contraseña">
+                       <!-- span de errores -->
+                            <span class="form-text text-danger" *ngIf="campoNoValido('password2')">
+                            La contraseña no coincide
+                        </span>
+                    </div>
+                </div>
+
+            </form>
+
+            <!-- Form de autorizacion -->
+            <form autocomplete="off" [formGroup]="formComprobar" *ngIf="!usuarioComprobado">
+                <div class="row justify-content-center align-items-center">
+
+                    <div class="mb-4 col-sm-8 col-md-8 text-center">
+                        <img src="assets/vaca.png" width="150px">
+                    </div>
+
+
+                    <div class="mb-4 col-sm-8 col-md-8">
+                        <label class="mt-1 mb-1">Ingrese la contraseña para poder editar los datos</label>
+                        <input type="password" class="form-control" formControlName="password"
+                            placeholder="Ingrese contraseña">
+                        <span class="form-text text-danger" *ngIf="campoNoValido('password')">
+                            Ingrese la contraseña
+                        </span>
+
+                    </div>
+
+
+                </div>
+            </form>
+
+            <div class="row mt-3 text-center" *ngIf="!usuarioComprobado" (click)="comprobar()">
+                <div class="col">
+                    <button class="btn btn-register">
+                        Comprobar
+                    </button>
+                </div>
+            </div>
+
+            <div class="row mt-3 text-center" *ngIf="usuarioComprobado && !autorizarActualizacion">
+                <div class="col">
+                    <button class="btn btn-register" [disabled]="formUsuario.invalid"
+                        (click)="comprobarActualizacion()">
+                        Actualizar
+                    </button>
+                </div>
+            </div>
+
+            <div class="row mt-3 text-center" *ngIf="usuarioComprobado && autorizarActualizacion"
+                (click)="actualizar()">
+                <div class="col">
+                    <button class="btn btn-register" (click)="actualizar()">
+                        Si
+                    </button>
+                    <button class="btn btn-register" (click)="cancelarActualizacion()">
+                        Cancelar
+                    </button>
+                </div>
+
+                <span class="form-text text-danger">
+                    ¿Desea Actualizar sus datos?
+                </span>
+
+            </div>
+        </div>
+    </div>
+</div>

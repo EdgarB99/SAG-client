@@ -1,0 +1,87 @@
+<h3 class="titulo animate__animated animate__fadeInLeft">Ventas</h3>
+<hr>
+<div class="container-buttons animate__animated animate__fadeIn">
+    <div class="buttons">
+      <div class="row">
+        <div class="col-sm-8 col-md-6 col-xl-5 col-xxl-3 mb-2">
+            <button class="btn btn-select" (click)="toVentas()" [disabled]="ventas">
+              Vacas listas para venta
+            </button>
+        </div>
+        <div class="col-sm-8 col-md-6 col-xl-5 col-xxl-3 mb-2">
+         
+            <button class="btn btn-select" (click)="toVendidas()" [disabled]="vendidas">
+              Vacas vendidas
+            </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<div *ngIf="ventas">
+  <h5 class="text-valid text-center animate__animated animate__fadeIn">Vacas Listas para venta</h5>
+
+
+  <div class="container-table animate__animated animate__fadeIn" *ngIf="vacas">
+    <table>
+      <tr class="table-header">
+        <th>Arete</th>
+        <th>Fecha de Nacimiento</th>
+        <th>Fecha Ingreso</th>
+        <th>kg</th>
+        <th>lb</th>
+        <th>Raza</th>
+        <th>Lote</th>
+        <th></th>
+        <th></th>
+      </tr>
+
+      <tr *ngFor="let vaca of vacas" class="table-body">
+        <td>{{ vaca.arete }}</td>
+        <td>{{ vaca.fechaNacimiento }}</td>
+        <td>{{ vaca.fechaIngreso }}</td>
+        <td>{{ vaca.peso! | kg }}</td>
+        <td>{{ vaca.peso! | lb }}</td>
+        <td>{{ vaca.raza }}</td>
+        <td>{{ vaca.loteId | nombreLote | async }}</td>
+        <td>
+          <button class="btn btn-vender" (click)="vender(vaca.id!)">
+            Vender
+          </button>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+
+<div *ngIf="vendidas">
+    <h5 class="text-valid text-center animate__animated animate__fadeIn">Vacas vendidas</h5>
+  
+  
+    <div class="container-table animate__animated animate__fadeIn" *ngIf="vacasV">
+      <table>
+        <tr class="table-header">
+          <th>Arete</th>
+          <th>kg</th>
+          <th>lb</th>
+          <th>Raza</th>
+          <th>Lote</th>
+          <th>Fecha Venta</th>
+          <th>Precio Kg</th>
+          <th>Precio Total</th>
+        </tr>
+  
+        <tr *ngFor="let vaca of vacasV" class="table-body">
+          <td>{{ vaca.arete }}</td>
+          <td>{{ vaca.peso! | kg }}</td>
+          <td>{{ vaca.peso! | lb }}</td>
+          <td>{{ vaca.raza }}</td>
+          <td>{{ vaca.loteId | nombreLote | async }}</td>
+          <td>{{ vaca.venta?.fechaVenta}}</td>
+          <td>$ {{ vaca.venta?.precioKg}}</td>
+          <td>$ {{ vaca.venta?.precioTotal}}</td>
+        </tr>
+      </table>
+    </div>
+  </div>

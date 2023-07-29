@@ -1,0 +1,115 @@
+<div
+  class="d-flex justify-content-center align-items-center"
+  style="height: 130vh"
+>
+  <div
+    class="card card col-xs-12 col-sm-8 col-md-8 col-lg-4 col-xl-5 col-xxl-5 p-1 animate__animated animate__fadeInLeft"
+  >
+    <div class="card-header text-center">
+      <h5>Registrate</h5>
+    </div>
+
+    <div class="card-body mb-2">
+      <form autocomplete="off" [formGroup]="formUsuario">
+        <div class="row justify-content-center align-items-center">
+          <div class="mb-4 col-sm-8 col-md-8 text-center">
+            <img src="assets/vaca.png" width="100px" />
+          </div>
+
+          <div class="mb-4 col-sm-8 col-md-8">
+            <label class="mb-1">Nombre(s)</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="nombre"
+              placeholder="Ingrese nombre(s)"
+            />
+            <span class="form-text text-danger " *ngIf="campoNoValido('nombre')">
+              Ingrese el nombre
+            </span>
+          </div>
+
+          <div class="mb-4 col-sm-8 col-md-8">
+            <label class="mt-1 mb-1">Apellido(s)</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="apellidos"
+              placeholder="Ingrese apellido(s)"
+            />
+            <span
+              class="form-text text-danger"
+              *ngIf="campoNoValido('apellidos')"
+            >
+              Ingrese los apellidos
+            </span>
+          </div>
+
+          <div class="mb-4 col-sm-8 col-md-8">
+            <label class="mt-1 mb-1">Correo Electronico</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="email"
+              placeholder="ejemplo@gmail.com"
+            />
+            <span class="form-text text-danger" *ngIf="campoNoValido('email')">
+              {{ emailErrorMsg }}
+            </span>
+          </div>
+
+          <div class="mb-4 col-sm-8 col-md-8">
+            <label class="mt-1 mb-1">Contraseña</label>
+            <input
+              type="password"
+              class="form-control"
+              formControlName="password"
+              placeholder="Ingrese contraseña"
+            />
+            <span
+              class="form-text text-danger"
+              *ngIf="campoNoValido('password')"
+            >
+              Ingrese la contraseña
+            </span>
+          </div>
+
+          <div class="col-sm-8 col-md-8">
+            <label class="mt-1 mb-1">Confirmar contraseña</label>
+            <input
+              type="password"
+              class="form-control"
+              formControlName="password2"
+              placeholder="Confirme la contraseña"
+            />
+            <span
+              class="form-text text-danger"
+              *ngIf="campoNoValido('password2')"
+            >
+              La contraseña no coincide
+            </span>
+          </div>
+        </div>
+      </form>
+
+      <div class="row mt-3 text-center">
+        <div class="col">
+          <button
+            class="btn btn-register"
+            (click)="registrar()"
+            [disabled]="formUsuario.invalid"
+          >
+            Registrar
+          </button>
+        </div>
+      </div>
+
+      <div class="row mt-3 text-center">
+        <div class="col">
+          <span> ¿Ya tiene una cuenta? </span>
+          <a (click)="toLogin()"> Ir a login </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

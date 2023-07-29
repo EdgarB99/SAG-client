@@ -1,0 +1,29 @@
+<h3 class="titulo animate__animated animate__fadeInLeft">Formulación</h3>
+<hr>
+<div class="container-buttons animate__animated animate__fadeIn">
+  <div class="buttons">
+    <div class="row">
+      <div class="col-sm-8 col-md-6 col-xl-5 col-xxl-3 mb-2">
+          <button class="btn btn-select" (click)="toFormula()" [disabled]="formula">
+            Dietas
+          </button>
+      </div>
+      <div class="col-sm-8 col-md-6 col-xl-5 col-xxl-3 mb-2">
+        <button class="btn btn-select" (click)="toDosis()" [disabled]="dosis">
+            Dosificacion
+          </button>
+      </div>
+      <div class="col-sm-8 col-md-6 col-xl-5 col-xxl-3">
+          <button class="btn btn-select" (click)="toDieta()" [disabled]="dietas">
+            Listado dietas
+          </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-formulacion *ngIf="formula"></app-formulacion>
+
+<app-dosificacion *ngIf="dosis"></app-dosificacion>
+
+<app-dietas *ngIf="dietas"></app-dietas>

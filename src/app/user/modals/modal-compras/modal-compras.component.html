@@ -1,0 +1,202 @@
+<!-- Container de toda la pantalla -->
+<div [ngClass]="this.modalA ? 'modal-containerV ' : 'modal-container'">
+  <!-- Container del  modal-->
+  <div [ngClass]="this.modalA ? 'mod animate__animated animate__fadeInLeft' : 'modal-close'">
+    <!-- Header -->
+    <div class="modal-header">
+      <h4>{{ titulo }}</h4>
+      <p class="close" (click)="modalAction()">X</p>
+    </div>
+    <!-- body del modal -->
+    <div class="modal-textos">
+      <form
+        [formGroup]="formCompra"
+        class="d-flex justify-content-center align-items-center"
+        style="height: 50%"
+      >
+        <div class="row justify-content-center">
+          <!-- Input Concepto -->
+          <div class="mb-4 col-sm-10 col-md-10">
+            <label class="mb-1">Concepto</label>
+            <input
+              type="text"
+              [ngClass]="
+                actualizar
+                  ? campoNoValido('concepto')
+                    ? 'form-control form-invalido'
+                    : 'form-control form-valido'
+                  : campoTouched('concepto')
+                  ? campoNoValido('concepto')
+                    ? 'form-control form-invalido'
+                    : 'form-control form-valido'
+                  : 'form-control'
+              "
+              formControlName="concepto"
+              placeholder="Maiz"
+            />
+            <!-- span de errores -->
+            <span
+              class="form-text text-danger"
+              *ngIf="campoNoValido('concepto')"
+            >
+              Ingrese el nombre del alimento
+            </span>
+          </div>
+
+          <!-- Input Cantidad -->
+          <div class="mb-4 col-sm-10 col-md-10">
+            <label class="mb-1">Cantidad (kg)</label>
+            <input
+              type="number"
+              [ngClass]="
+                actualizar
+                  ? campoNoValido('cantidad')
+                    ? 'form-control form-invalido'
+                    : 'form-control form-valido'
+                  : campoTouched('cantidad')
+                  ? campoNoValido('cantidad')
+                    ? 'form-control form-invalido'
+                    : 'form-control form-valido'
+                  : 'form-control'
+              "
+              formControlName="cantidad"
+              placeholder="1000"
+            />
+            <!-- span de errores -->
+            <span
+              class="form-text text-danger"
+              *ngIf="campoNoValido('cantidad')"
+            >
+              Ingrese el tipo del alimento
+            </span>
+          </div>
+
+          <!-- Input Precio -->
+          <div class="mb-4 col-sm-10 col-md-10">
+            <label class="mb-1">Precio</label>
+            <input
+              type="number"
+              [ngClass]="
+                actualizar
+                  ? campoNoValido('precio')
+                    ? 'form-control form-invalido'
+                    : 'form-control form-valido'
+                  : campoTouched('precio')
+                  ? campoNoValido('precio')
+                    ? 'form-control form-invalido'
+                    : 'form-control form-valido'
+                  : 'form-control'
+              "
+              formControlName="precio"
+              placeholder="2000"
+            />
+            <!-- span de errores -->
+            <span class="form-text text-danger" *ngIf="campoNoValido('precio')">
+              Ingrese el tipo del alimento
+            </span>
+          </div>
+
+          <!-- Input Tipo -->
+          <div class="mb-4 col-sm-10 col-md-10">
+            <label class="form-label">Tipo</label>
+            <select
+              class="form-control selector-mod"
+              [ngClass]="
+                actualizar
+                  ? campoNoValido('tipo')
+                    ? 'form-control form-invalido'
+                    : 'form-control form-valido'
+                  : campoTouched('tipo')
+                  ? campoNoValido('tipo')
+                    ? 'form-control form-invalido'
+                    : 'form-control form-valido'
+                  : 'form-control'
+              "
+              formControlName="tipo"
+            >
+              <option value="">-- Seleccione el periodo --</option>
+              <option *ngFor="let tipo of tipos" [value]="tipo">
+                {{ tipo }}
+              </option>
+            </select>
+
+            <!-- span de errores -->
+            <span class="form-text text-danger" *ngIf="campoNoValido('tipo')">
+              Seleccione el tipo
+            </span>
+          </div>
+
+          <!-- Periodo -->
+          <div class="mb-4 col-sm-10 col-md-10">
+            <label class="form-label">Periodo</label>
+            <select
+              class="form-control selector-mod"
+              [ngClass]="
+                actualizar
+                  ? campoNoValido('periodo')
+                    ? 'form-control form-invalido'
+                    : 'form-control form-valido'
+                  : campoTouched('periodo')
+                  ? campoNoValido('periodo')
+                    ? 'form-control form-invalido'
+                    : 'form-control form-valido'
+                  : 'form-control'
+              "
+              formControlName="periodo"
+            >
+              <option value="">-- Seleccione el periodo --</option>
+              <option *ngFor="let periodo of periodos" [value]="periodo">
+                {{ periodo }}
+              </option>
+            </select>
+
+            <!-- span de errores -->
+            <span
+              class="form-text text-danger"
+              *ngIf="campoNoValido('periodo')"
+            >
+              Seleccione el periodo
+            </span>
+          </div>
+        </div>
+      </form>
+
+      <div class="row text-center" *ngIf="!actualizar">
+        <div class="col">
+          <button
+            class="btn btn-register"
+            (click)="registerCompra()"
+            [disabled]="formCompra.invalid"
+          >
+            Registrar
+          </button>
+        </div>
+      </div>
+
+      <div class="row mt-3 text-center" *ngIf="actualizar && !comprobar">
+        <div class="col">
+          <button
+            class="btn btn-register"
+            (click)="confirm()"
+            [disabled]="formCompra.invalid"
+          >
+            Actualizar
+          </button>
+        </div>
+      </div>
+
+      <div class="row mt-3 text-center" *ngIf="actualizar && comprobar">
+        <div class="col">
+          <button class="btn btn-register" (click)="updateCompra()">Si</button>
+          <button class="btn btn-register">Cancelar</button>
+        </div>
+
+        <span class="form-text text-danger">
+          ¿Desea Actualizar sus datos?
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-snackbar [showSnackbar]="showSnackbar" [mensaje]="mensaje"></app-snackbar>

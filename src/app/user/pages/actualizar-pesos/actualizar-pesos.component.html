@@ -1,0 +1,156 @@
+<h3 class="titulo animate__animated animate__fadeInLeft">Actualizar pesos</h3>
+<hr />
+
+<!-- Contenedor de los selectores -->
+<div class="container-selectores animate__animated animate__fadeIn">
+  <div class="row">
+    <div class="col-sm-6 col-md-5 col-xl-4 col-xxl-3">
+      <form [formGroup]="formNombreLote">
+        <div class="col-sm-8 col-sm-8 col-xl-3 col-xxl-3">
+          <label class="form-label">Lotes</label>
+          <select class="form-control selector" formControlName="nombreLote">
+            <option value="">-- Seleccione lote --</option>
+            <option *ngFor="let lote of lotes" [value]="lote">
+              {{ lote }}
+            </option>
+          </select>
+        </div>
+      </form>
+    </div>
+
+    <div
+      *ngIf="aretes && aretes.length !== 0"
+      class="col-sm-6 col-md-8 col-xl-4 col-xxl-3 animate__animated animate__fadeIn"
+    >
+      <form [formGroup]="formVacaArete">
+        <div class="col-sm-8 col-sm-6 col-xl-3 col-xxl-3">
+          <label class="form-label">Aretes</label>
+          <select class="form-control selector" formControlName="arete">
+            <option value="">-- Seleccione arete --</option>
+            <option *ngFor="let arete of aretes" [value]="arete">
+              {{ arete }}
+            </option>
+          </select>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="container-peso mt-3 animate__animated animate__fadeIn">
+  <div class="card-peso">
+    <!-- Msj si el lote no contiene registros -->
+    <div *ngIf="aretes && aretes.length === 0">
+      <h2 class="text-center text-danger mb-4 animate__animated animate__fadeIn">
+        Este lote no contiene registros
+      </h2>
+    </div>
+    <h3 class="text-center">{{ fecha }}</h3>
+    <h4 class="text-center mt-3" *ngIf="!vaca">Seleccione a la vaca</h4>
+
+    <!-- contenedor de los datos de la vaca -->
+    <div *ngIf="lote && vaca" class="animate__animated animate__fadeIn">
+      <h4 class="mt-2" *ngIf="vaca">{{ vaca.arete }}</h4>
+      <div class="row mt-3">
+        <div class="col-sm-6" *ngIf="lote && vaca">
+          <div class="row datos-vaca animate__animated animate__fadeIn">
+            <span class="col-sm-10">Lote: {{ lote.nombreLote }}</span>
+
+            <!-- Msj si la vaca no tiene registros en peso -->
+            <h5 *ngIf="!pesoActual" class="text-danger">
+              Esta vaca aún no tiene pesos registrados
+            </h5>
+            <!-- Datos del peso de la vaca -->
+            <!-- <span class="col-sm-10">Raza: {{vaca.razaId}}</span> -->
+            <span class="col-sm-10" *ngIf="pesoActual"
+              ><h6>Peso actual:</h6></span
+            >
+            <span class="col-sm-10" *ngIf="pesoActual"
+              >kg: {{ pesoActual.kg }}</span
+            >
+            <span class="col-sm-10" *ngIf="pesoActual"
+              >lb: {{ pesoActual.lb }}</span
+            >
+            <span class="col-sm-10" *ngIf="pesoAnterior"
+              ><h6>Peso anterior:</h6></span
+            >
+            <span class="col-sm-10" *ngIf="pesoAnterior"
+              >Kg: {{ pesoAnterior.kg }}</span
+            >
+            <span class="col-sm-10" *ngIf="pesoAnterior"
+              >Lb: {{ pesoAnterior.lb }}</span
+            >
+          </div>
+        </div>
+        <!-- Formulario para poder registrar el peso -->
+        <div class="col-sm-6">
+          <h5>Ingrese el peso</h5>
+          <form [formGroup]="formPeso">
+            <!-- Pesos -->
+            <!-- Kilogramos -->
+            <div class="col-sm-8 mb-3">
+              <label class="mb-1">Kg</label>
+              <input
+                type="number"
+                class="form-control"
+                formControlName="kg"
+                placeholder="200"
+              />
+              <!-- span de errores -->
+              <span
+                [ngClass]="
+                  fechaPesoActual >= fechaActual
+                    ? 'd-none'
+                    : 'form-text text-danger'
+                "
+                *ngIf="campoNoValido('kg')"
+              >
+                Ingrese los kg
+              </span>
+            </div>
+            <!-- Libras -->
+            <div class="col-sm-8">
+              <label class="mb-1">Lb</label>
+              <input
+                type="number"
+                class="form-control"
+                formControlName="lb"
+                placeholder="200"
+                readonly="true"
+              />
+              <!-- span de errores -->
+
+              <span
+                [ngClass]="
+                  fechaPesoActual >= fechaActual
+                    ? 'd-none'
+                    : 'form-text text-danger'
+                "
+                *ngIf="campoNoValido('lb')"
+              >
+                Ingrese las libras
+              </span>
+            </div>
+          </form>
+          <div class="row mt-3">
+            <div class="col">
+              <button
+                class="btn btn-register"
+                (click)="registerPeso()"
+                [disabled]="formPeso.invalid || fechaPesoActual >= fechaActual"
+              >
+                Registrar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Mensaje si ya hay un registro con el día actual  -->
+    <div class="mt-3 peso-registrado animate__animated animate__fadeIn" *ngIf="fechaPesoActual >= fechaActual">
+      <h5 class="text-center">
+        Ya se registro el peso de hoy {{ fechaActual }}
+      </h5>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,137 @@
+<!-- Container de toda la pantalla -->
+<div [ngClass]="this.modalA ? 'modal-containerV animate__animated animate__fadeInLeft' : 'modal-container'">
+  <!-- Container del  modal-->
+  <div [ngClass]="this.modalA ? 'mod' : 'modal-close'">
+    <!-- Header -->
+    <div class="modal-header">
+      <h4>{{ titulo }}</h4>
+      <p class="close" (click)="modalAction()">X</p>
+    </div>
+    <!-- body del modal -->
+    <div class="modal-textos">
+      <form
+        [formGroup]="formAlimento"
+        class="d-flex justify-content-center align-items-center"
+        style="height: 50%"
+      >
+        <div class="row justify-content-center">
+          <div class="mb-4 col-sm-10 col-md-10">
+            <label class="mb-1">Nombre del alimento</label>
+            <input
+              type="text"
+              [ngClass]="
+                actualizar
+                  ? campoNoValido('nombreAlimento')
+                    ? 'form-control form-invalido'
+                    : 'form-control form-valido'
+                  : campoTouched('nombreAlimento')
+                  ? campoNoValido('nombreAlimento')
+                    ? 'form-control form-invalido'
+                    : 'form-control form-valido'
+                  : 'form-control'
+              "
+              formControlName="nombreAlimento"
+              placeholder="Paja"
+            />
+            <!-- span de errores -->
+            <span
+              class="form-text text-danger"
+              *ngIf="campoNoValido('nombreAlimento')"
+            >
+              Ingrese el nombre del alimento
+            </span>
+          </div>
+
+          <!-- Descripcion -->
+          <div class="mb-4 col-sm-10 col-md-10">
+            <label class="mb-1">Tipo</label>
+            <input
+              type="text"
+              [ngClass]="
+                actualizar
+                  ? campoNoValido('tipo')
+                    ? 'form-control form-invalido'
+                    : 'form-control form-valido'
+                  : campoTouched('tipo')
+                  ? campoNoValido('tipo')
+                    ? 'form-control form-invalido'
+                    : 'form-control form-valido'
+                  : 'form-control'
+              "
+              formControlName="tipo"
+              placeholder="Ensilaje"
+            />
+            <!-- span de errores -->
+            <span class="form-text text-danger" *ngIf="campoNoValido('tipo')">
+              Ingrese el tipo del alimento
+            </span>
+          </div>
+
+          <!-- Precio -->
+          <div class="mb-4 col-sm-10 col-md-10">
+            <label class="mb-1">Precio</label>
+            <input
+              type="number"
+              [ngClass]="
+                actualizar
+                  ? campoNoValido('precio')
+                    ? 'form-control form-invalido'
+                    : 'form-control form-valido'
+                  : campoTouched('precio')
+                  ? campoNoValido('precio')
+                    ? 'form-control form-invalido'
+                    : 'form-control form-valido'
+                  : 'form-control'
+              "
+              formControlName="precio"
+              placeholder="12.30"
+            />
+            <!-- span de errores -->
+            <span class="form-text text-danger" *ngIf="campoNoValido('precio')">
+              Ingrese el tipo del alimento
+            </span>
+          </div>
+        </div>
+      </form>
+
+      <div class="row text-center" *ngIf="!actualizar">
+        <div class="col">
+          <button
+            class="btn btn-register"
+            (click)="registerAlimento()"
+            [disabled]="formAlimento.invalid"
+          >
+            Registrar
+          </button>
+        </div>
+      </div>
+
+      <div class="row mt-3 text-center" *ngIf="actualizar && !comprobar">
+        <div class="col">
+          <button
+            class="btn btn-register"
+            (click)="confirm()"
+            [disabled]="formAlimento.invalid"
+          >
+            Actualizar
+          </button>
+        </div>
+      </div>
+
+      <div class="row mt-3 text-center" *ngIf="actualizar && comprobar">
+        <div class="col">
+          <button class="btn btn-register" (click)="updateAlimento()">
+            Si
+          </button>
+          <button class="btn btn-register">Cancelar</button>
+        </div>
+
+        <span class="form-text text-danger">
+          ¿Desea Actualizar sus datos?
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-snackbar [showSnackbar]="showSnackbar" [mensaje]="mensaje"></app-snackbar>

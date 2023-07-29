@@ -1,0 +1,121 @@
+<!-- Body -->
+<!-- ngclass para el cambio de tema -->
+<body [ngClass]="this.theme ? 'root' : 'dark-mode'">
+
+    <!-- Navbar -->
+    <section ngClass="navbar">
+        <!-- contenido navbar -->
+        <div class="navbar-content">
+            <div class="navbar-logo">
+                <img src="assets/vaca.png">
+            </div>
+            <!-- menu del navbar -->
+            <div class="navbar-menu">
+                <img routerLink="./usuario" src="assets/user.png">
+                <p *ngIf="this.usuario">{{this.usuario.nombre}} {{this.usuario.apellidos}}</p>
+                <p class="logout" (click)="logout()">Cerrar Sesión</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sidebar -->
+    <section [ngClass]="this.expandir ? 'sidebar expand' : 'sidebar'">
+        <!-- Header del sidebar -->
+        <div class="nav-header">
+            <!-- Menu del sidebar -->
+            <div class="sidebar-menu">
+                <img routerLink="./usuario" src="assets/user.png">
+                <p class="logout" (click)="logout()">Cerrar Sesión</p>
+            </div>
+            <i (click)="expandSidebar()"
+                [ngClass]="this.expandir ? 'bx bx-menu-alt-right btn-menu' : 'bx bx-menu bx-menu-alt-right btn-menu'"></i>
+        </div>
+        <!-- lista de nav-links -->
+        <ul class="nav-links">
+            <!-- Enlace tareas -->
+            <li>
+                <a routerLink="./tareas">
+                    <img src="assets/tareas.png">
+                    <span class="title">Tareas</span>
+                </a>
+                <span class="tooltip">Tareas</span>
+            </li>
+            <!-- Enlace vacas -->
+            <li>
+                <a routerLink="./vacas">
+                    <img src="assets/vaca.png">
+                    <span class="title">Vacas</span>
+                </a>
+                <span class="tooltip">Vacas</span>
+            </li>
+            <!-- Enlace lotes -->
+            <li>
+                <a routerLink="./lotes">
+                    <img src="assets/lote.png">
+                    <span class="title">Lotes</span>
+                </a>
+                <span class="tooltip">Lotes</span>
+            </li>
+            <!-- Enlace alimentos -->
+            <li>
+                <a routerLink="./compras">
+                    <img src="assets/alimento.png">
+                    <span class="title">Compras</span>
+                </a>
+                <span class="tooltip">Compras</span>
+            </li>
+            <!-- Enlace alimentacion -->
+            <li>
+                <a routerLink="./formulacion">
+                    <img src="assets/alimento.png">
+                    <span class="title">Formulación</span>
+                </a>
+                <span class="tooltip">Formulación</span>
+            </li>
+            <!-- Enlace actualizar pesos -->
+            <li>
+                <a routerLink="./actualizar-pesos">
+                    <img src="assets/kg.png">
+                    <span class="title">Actualizar pesos</span>
+                </a>
+                <span class="tooltip">Actualizar pesos</span>
+            </li>
+            <!-- Enlace reportes -->
+            <li>
+                <a routerLink="./reportes">
+                    <img src="assets/graficas.png">
+                    <span class="title">Reportes</span>
+                </a>
+                <span class="tooltip">Reportes</span>
+            </li>
+            <!-- Enlace vender -->
+            <li>
+                <a routerLink="./vender">
+                    <img src="assets/venta.png">
+                    <span class="title">Vender</span>
+                </a>
+                <span class="tooltip">Vender</span>
+            </li>
+
+        </ul>
+
+        <!-- Boton cambio de tema -->
+        <div class="theme-wrapper">
+            <i class="bx bxs-moon theme-icon"></i>
+            <p *ngIf="this.theme">Dark Theme</p>
+            <p *ngIf="!this.theme">Light Theme</p>
+            <div class="theme-btn">
+                <span class="theme-ball" (click)="darkOrlight()"></span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Home -->
+    <section class="home">
+        <div [ngClass]="this.expandir ? 'btn-sb-e' : 'btn-sb' ">
+            <i (click)="expandSidebar()"
+                [ngClass]="this.expandir ? 'bx bx-menu-alt-right btn-menu' : 'bx bx-menu bx-menu-alt-right btn-menu' "></i>
+        </div>
+        <router-outlet></router-outlet>
+    </section>
+</body>

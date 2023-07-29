@@ -1,0 +1,148 @@
+<!-- Container de toda la pantalla -->
+<div [ngClass]="this.modalA ? 'modal-containerV' : 'modal-container'">
+  <!-- Container del  modal-->
+  <div [ngClass]="this.modalA ? 'mod animate__animated animate__fadeInLeft' : 'modal-close'">
+    <!-- Header -->
+    <div class="modal-header">
+      <h4>{{ titulo }}</h4>
+      <p class="close" (click)="modalAction()">X</p>
+    </div>
+    <!-- body del modal -->
+    <div class="modal-textos">
+      <form
+        [formGroup]="formLote"
+        class="d-flex justify-content-center align-items-center"
+        style="height: 50%"
+      >
+        <div class="row justify-content-center">
+          <div class="mb-4 col-sm-10 col-md-10">
+            <label class="mb-1">Nombre del lote</label>
+            <input
+              type="text"
+              class="form-control"
+              [ngClass]="
+                actualizar
+                  ? campoNoValido('nombreLote')
+                    ? 'form-invalido'
+                    : 'form-valido'
+                  : campoTouched('nombreLote')
+                  ? campoNoValido('nombreLote')
+                    ? 'form-invalido'
+                    : 'form-valido'
+                  : 'form-control'
+              "
+              formControlName="nombreLote"
+              placeholder="Ingrese nombre del lote"
+            />
+            <!-- span de errores -->
+            <span
+              class="form-text text-danger"
+              *ngIf="campoNoValido('nombreLote')"
+            >
+              Ingrese el nombre del lote
+            </span>
+          </div>
+
+          <!-- Periodo -->
+          <div class="mb-4 col-sm-10 col-md-10">
+            <label class="form-label">Periodo</label>
+            <select
+              class="form-control selector-mod"
+              [ngClass]="
+                actualizar
+                  ? campoNoValido('periodo')
+                    ? 'form-control form-invalido'
+                    : 'form-control form-valido'
+                  : campoTouched('periodo')
+                  ? campoNoValido('periodo')
+                    ? 'form-control form-invalido'
+                    : 'form-control form-valido'
+                  : 'form-control'
+              "
+              formControlName="periodo"
+            >
+              <option value="">-- Seleccione periodo --</option>
+              <option *ngFor="let periodo of periodos" [value]="periodo">
+                {{ periodo }}
+              </option>
+            </select>
+
+            <!-- span de errores -->
+            <span
+              class="form-text text-danger"
+              *ngIf="campoNoValido('periodo')"
+            >
+              Seleccione el periodo
+            </span>
+          </div>
+
+          <!-- Descripcion -->
+          <div class="mb-4 col-sm-10 col-md-10">
+            <label class="mb-1">Descripcion</label>
+            <input
+              type="text"
+              class="form-control"
+              [ngClass]="
+                actualizar
+                  ? campoNoValido('descripcion')
+                    ? 'form-invalido'
+                    : 'form-valido'
+                  : campoTouched('descripcion')
+                  ? campoNoValido('descripcion')
+                    ? 'form-invalido'
+                    : 'form-valido'
+                  : 'form-control'
+              "
+              formControlName="descripcion"
+              placeholder="Descripcion"
+            />
+            <!-- span de errores -->
+            <span
+              class="form-text text-danger"
+              *ngIf="campoNoValido('descripcion')"
+            >
+              Ingrese la descripcion
+            </span>
+          </div>
+        </div>
+      </form>
+
+      <div class="row text-center" *ngIf="!actualizar">
+        <div class="col">
+          <button
+            class="btn btn-register"
+            (click)="registerLote()"
+            [disabled]="formLote.invalid"
+          >
+            Registrar
+          </button>
+        </div>
+      </div>
+
+      <div class="row mt-3 text-center" *ngIf="actualizar && !comprobar">
+        <div class="col">
+          <button
+            class="btn btn-register"
+            (click)="confirm()"
+            [disabled]="formLote.invalid"
+          >
+            Actualizar
+          </button>
+        </div>
+      </div>
+
+      <div class="row mt-3 text-center" *ngIf="actualizar && comprobar">
+        <div class="col">
+          <button class="btn btn-register" (click)="updateLote()">Si</button>
+          <button class="btn btn-register">Cancelar</button>
+        </div>
+
+        <span class="form-text text-danger">
+          ¿Desea Actualizar sus datos?
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-snackbar [showSnackbar]="showSnackbar" [mensaje]="mensaje"></app-snackbar>

@@ -1,0 +1,53 @@
+<h3 class="titulo animate__animated animate__fadeInLeft">Lotes</h3>
+<hr>
+
+<div class="container-selector animate__animated animate__fadeIn">
+
+    <div>
+        <!-- Boton Agregar -->
+        <button class="btn btn-register btn-agregar" (click)="agregarLote()">Agregar Lote</button>
+    </div>
+</div>
+
+
+<div class="container-table animate__animated animate__fadeIn">
+    <table>
+        <tr class="table-header">
+            <th>Nombre</th>
+            <th>Periodo</th>
+            <th>Descripcion</th>
+            <th></th>
+        </tr>
+
+        <tr *ngFor="let lote of lotes" class="table-body">
+            <td>{{lote.nombreLote}}</td>
+            <td>{{lote.periodo}}</td>
+            <td>{{lote.descripcion}}</td>
+            <td><button class="btn btn-editar" (click)="editarLote(lote.id!)" >Editar</button></td>
+        </tr>
+    </table>
+</div>
+
+
+
+<div class="container-pagination animate__animated animate__fadeIn" *ngIf="lotes">
+    <button class="arrow-l" (click)="paginationLess()" [disabled]="pagination === 0">
+       <
+    </button>
+    <span class="arrow-n" >
+       {{pagination + 1}}
+    </span>
+    <button class="arrow-r" (click)="paginationPlus()" [disabled]="lotes.length < 5  || bloqueoPag">
+       >
+    </button>
+   </div>
+
+<app-modal-lote
+*ngIf="modal"
+[usuarioId]="usuarioId"
+[titulo]="titulo"
+[actualizar]="actualizar"
+[lote]="lote"
+[modalA]="modal" 
+(modal)="modal = $event"
+></app-modal-lote>

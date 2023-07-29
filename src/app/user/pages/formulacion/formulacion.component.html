@@ -1,0 +1,97 @@
+<h5 class="text-center animate__animated animate__fadeIn">Formulación de dietas</h5>
+
+<div class="container-formulacion mt-3 animate__animated animate__fadeIn">
+    <div class="card-formulacion">
+        <div class="row">
+            <!-- Formulario -->
+            <div class="col-md-6">
+                <form [formGroup]="formDieta">
+                <p>Formulario</p>
+
+                <!-- Nombre de la formula -->
+                <div class="col-sm-8 mb-3">
+                    <label class="mb-1">Nombre de la Formula</label>
+                    <input type="text"
+                    [ngClass]=" actualizar ? (campoNoValido('nombreDieta') ? 'form-control form-invalido' : 'form-control form-valido') 
+                    :  ( campoTouched('nombreDieta') ? (campoNoValido('nombreDieta') ? 'form-control form-invalido' : 'form-control form-valido') : 'form-control')"
+                        formControlName="nombreDieta" placeholder="Formula 1">
+                    <!-- span de errores -->
+                    <span class="form-text text-danger" *ngIf="campoNoValido('nombreDieta')">
+                        Ingrese el nombre de la formula
+                    </span>
+                </div>
+
+                <div class="row col-sm-12 mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label">Producto</label>
+                        <select class="form-control selector-mod"
+                        [ngClass]=" actualizar 
+                        ? (campoNoValido('nombreAlimento') ? 'form-control form-invalido' : 'form-control form-valido') 
+                        : ( campoTouched('nombreAlimento') ? (campoNoValido('nombreAlimento') ? 'form-control form-invalido' 
+                        : 'form-control form-valido') : 'form-control')"
+                        formControlName="nombreAlimento">
+                            <option value=""> -- Producto -- </option>
+                            <option *ngFor="let producto of productos; index as i" [value]="i"> {{producto}} </option>
+                        </select>
+                </div>
+
+                    <div class="col-sm-3">
+                        <label class="form-label text-center">%</label>
+                    <input type="number"
+                    class="form-control selector-mod"
+                    [ngClass]=" actualizar ? (campoNoValido('porcentaje') ? 'form-control form-invalido' : 'form-control form-valido') 
+                    :  ( campoTouched('porcentaje') ? (campoNoValido('porcentaje') ? 'form-control form-invalido' : 'form-control form-valido') : 'form-control')"
+                        formControlName="porcentaje" placeholder="50">
+                    </div>
+
+                    <div class="col-sm-2">
+                        <button class="btn btn-add" (click)="addProducto()" [disabled]="formDieta.invalid || porcentajeFormula == 100">+</button>
+                    </div>
+
+                </div>
+            </form>
+            </div>
+            <!-- Datos de la dieta -->
+            <div class="col-md-6 animate__animated animate__fadeIn">
+                <!-- Header -->
+                <p class="text-center">{{nombreDieta}}</p>
+                <hr>
+
+                <p *ngIf="alimentos.length === 0">Agregar productos</p>
+                
+                <!-- Productos agregados a la dieta -->
+                <div *ngFor="let producto of alimentos; index as i" class="animate__animated animate__fadeIn">
+                    <p>Producto: {{producto.nombreAlimento}}</p>
+                    <p>Porcentaje: {{producto.porcentaje}} %<button class="btn btn-eliminar" (click)="deleteProducto(i)">x</button></p>
+                </div>
+
+                <span class="form-text text-danger animate__animated animate__fadeIn" *ngIf="porcentajeFaltante < 100 && porcentajeFaltante > 0 ">
+                    Porcentaje faltante {{porcentajeFaltante}} %
+                </span>
+
+                <br>
+
+                <span class="form-text text-danger animate__animated animate__fadeIn" *ngIf="porcentajeFormula < 99">
+                    Complete el 100% de la formula
+                </span>
+
+                <span class="form-text text-danger animate__animated animate__fadeIn" *ngIf="porcentajeFormula > 100">
+                    Elimine alimentos
+                </span>
+
+                <span class="form-text text-valid animate__animated animate__fadeIn" *ngIf="porcentajeFormula == 100">
+                    Formula completa
+                </span>
+
+                <br>
+                <button class="btn btn-select mt-3 animate__animated animate__fadeIn" (click)="registerDieta()" *ngIf="porcentajeFormula === 100">Registrar Dieta</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<app-snackbar
+[showSnackbar]="showSnackbar"
+[mensaje]="mensaje"
+></app-snackbar>

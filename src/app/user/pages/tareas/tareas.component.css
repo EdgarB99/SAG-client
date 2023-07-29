@@ -1,0 +1,75 @@
+
+.container-btn{
+  width: 100%;
+  padding: 3% 3%;
+}
+
+.content-btn button{
+ margin: 5px 3px;
+}
+
+.container-alimentacion{
+    width: 100%;
+    padding: 5% 8%;
+}
+
+.container-pesos{
+  width: 100%;
+  padding: 5% 8%;
+}
+
+
+.card-alimentacion {
+    width: 80%;
+    max-width: 600px;
+    min-width: 50px;
+    min-height: 250px;
+    border: 1px solid #ccc;
+    background-color: var(--color-white);
+    color: var(--color-black);
+    border-radius: 5px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    margin: 15px 0px;
+    padding: 10px;
+  }
+  
+  
+  .card-content {
+    padding: 10px;
+  }
+  
+  .card-content h2 {
+    margin: 0;
+    font-size: 18px;
+    line-height: 1.2;
+  }
+  
+  .card-content p {
+    margin: 5px 0 0;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  
+  .card-content button {
+    margin: 10px;
+  }
+
+  .card-pesos {
+    width: 90%;
+    min-width: 200px;
+    min-height: 250px;
+    border: 1px solid #ccc;
+    background-color: var(--color-white);
+    color: var(--color-black);
+    border-radius: 5px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin: 10px 20px;
+    padding: 5%;
+  }
+
+
+  .toPeso{
+    float: right;
+  }
