@@ -32,7 +32,7 @@ import { Venta } from '../shared/interfaces/venta.interface';
   providedIn: 'root',
 })
 export class UserService {
-  public baseUrl = 'http://localhost:3000';
+  public baseUrl = 'https://sag-production.up.railway.app';
 
   constructor(private jwtHelper: JwtHelperService, private http: HttpClient) {}
 

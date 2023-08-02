@@ -9,7 +9,7 @@ import { Login } from '../shared/interfaces/login.interface';
   providedIn: 'root',
 })
 export class AuthService {
-  baseUrl = 'http://localhost:3000';
+  baseUrl = 'https://sag-production.up.railway.app';
   errorMsg!: string;
   private _auth: Usuario | undefined;
 
